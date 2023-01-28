@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Amazing Marvin",
+  "description": "Add new tasks to Marvin and see Today's tasks",
+  "version": "1.0",
+  "icons": {
+    "16": "static/icon_128x128.png",
+    "48": "static/icon_128x128.png",
+    "128": "static/icon_128x128.png"
+  },
+  "action": {
+    "default_icon": "static/icon_128x128.png",
+    "default_title": "Amazing Marvin",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "storage"
+  ]
+}

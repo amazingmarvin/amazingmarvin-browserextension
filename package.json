@@ -1,0 +1,42 @@
+{
+  "name": "amazingmarvin-browserextension",
+  "version": "1.0.0",
+  "description": "Browser Extension for Amazing Marvin",
+  "scripts": {
+    "start": "parcel watch src/manifest.json --host localhost --config @parcel/config-webextension",
+    "build": "parcel build src/manifest.json --config @parcel/config-webextension",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rijavecb/amazingmarvin-browserextension.git"
+  },
+  "keywords": [
+    "amazing marvin",
+    "amazing",
+    "marvin",
+    "browser extension",
+    "web extension",
+    "chrome extension",
+    "browser",
+    "extension"
+  ],
+  "author": "Branimir Rijavec",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rijavecb/amazingmarvin-browserextension/issues"
+  },
+  "homepage": "https://github.com/rijavecb/amazingmarvin-browserextension#readme",
+  "devDependencies": {
+    "@parcel/config-webextension": "^2.8.2",
+    "parcel": "^2.8.2",
+    "postcss": "^8.4.21",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.2.4"
+  },
+  "dependencies": {
+    "daisyui": "^2.47.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

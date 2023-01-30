@@ -31,8 +31,8 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
       <div className="card-body items-center text-center">
         <h2 className="card-title text-primary">Hello!</h2>
         <p>
-          To start using Amazing Marvin extension, you will have to add your API
-          token. You can get your token using{" "}
+          To start using Amazing Marvin extension, you will have to add your Amazing Marvin API
+          token. You can get it using{" "}
           <a
             href="https://app.amazingmarvin.com/pre?api"
             target="_blank"
@@ -62,7 +62,7 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
           />
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary" onClick={handleSave}>
+          <button className="btn btn-primary text-white" onClick={handleSave}>
             Save
           </button>
         </div>

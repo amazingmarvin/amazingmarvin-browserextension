@@ -1,15 +1,15 @@
-export async function verifyToken (token) {
+import { formatDate } from "./dates";
+
+export async function verifyToken(token) {
   const res = await fetch("https://serv.amazingmarvin.com/api/test", {
     method: "POST",
     headers: {
       "X-API-Token": token,
-    }
-  })
+    },
+  });
 
   if (res.ok) {
-    console.log("token is correct")
-
-    return { xApiToken: token }
+    return { "X-API-Token": token };
   }
 
   if (!res.ok) {
@@ -19,15 +19,36 @@ export async function verifyToken (token) {
       method: "POST",
       headers: {
         "X-Full-Access-Token": token,
-      }
-    })
+      },
+    });
 
     if (res.ok) {
-      console.log("token is correct")
+      console.log("token is correct");
 
-      return { xFullAccessToken: token }
+      return { "X-Full-Access-Token": token };
     }
   }
 
-  return false
+  return false;
+}
+
+export async function getTasks(token, day) {
+  const fixedDay = formatDate(day);
+  const res = await fetch(
+    `https://serv.amazingmarvin.com/api/todayItems?date=${fixedDay}`,
+    {
+      method: "GET",
+      headers: {
+        ...token
+      },
+    }
+  );
+
+  if (res.ok) {
+    return await res.json();
+  }
+
+  if (!res.ok) {
+    console.log(res);
+  }
 }

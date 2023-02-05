@@ -1,6 +1,8 @@
 import { getTasks } from "../utils/api";
 import Task from "./Task";
+import TaskListHeader from "./TaskListHeader";
 import { useEffect, useState } from "react";
+import { displayDate } from "../utils/dates";
 
 const TaskList = ({ apiToken }) => {
   console.log(apiToken);
@@ -21,6 +23,8 @@ const TaskList = ({ apiToken }) => {
 
   return (
     <div className="overflow-scroll scrollbar-hide">
+      <TaskListHeader day={day} setDay={setDay} />
+      <h2>{displayDate(day)}</h2>
       <ul>{renderedTasks}</ul>
     </div>
   );

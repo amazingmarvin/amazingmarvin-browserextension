@@ -39,13 +39,43 @@ export async function getTasks(token, day) {
     {
       method: "GET",
       headers: {
-        ...token
+        ...token,
       },
     }
   );
 
   if (res.ok) {
     return await res.json();
+  }
+
+  if (!res.ok) {
+    console.log(res);
+  }
+}
+
+// Needed to add "host_permissions": ["https://serv.amazingmarvin.com/api/*"], to Manifest in order for markDone to work
+// https://stackoverflow.com/questions/64732755/access-to-fetch-has-been-blocked-by-cors-policy-chrome-extension-error
+
+export async function markDone(token, id) {
+  const timeZoneOffset = new Date().getTimezoneOffset();
+  const data = {
+    itemId: id,
+    timeZoneOffset,
+  };
+
+  const res = await fetch(`https://serv.amazingmarvin.com/api/markDone`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...token,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (res.ok) {
+    return new Promise((resolve) => {
+      resolve(id);
+    });
   }
 
   if (!res.ok) {

@@ -17,8 +17,20 @@ const TaskList = ({ apiToken }) => {
     });
   }, [day]);
 
+  const updateTasks = (taskId) => {
+    const filteredTasks = tasks.filter((task) => task["_id"] !== taskId);
+    setTasks(filteredTasks);
+  };
+
   const renderedTasks = tasks.map((task) => {
-    return <Task task={task} key={task["_id"]} />;
+    return (
+      <Task
+        task={task}
+        key={task["_id"]}
+        apiToken={apiToken}
+        updateTasks={updateTasks}
+      />
+    );
   });
 
   return (

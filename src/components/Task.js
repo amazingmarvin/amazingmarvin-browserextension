@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import { markDone } from "../utils/api";
+import { HiFlag } from "react-icons/hi2";
 
 const Task = ({ task, apiToken, updateTasks }) => {
   const [checked, setChecked] = useState(false);
@@ -9,8 +10,8 @@ const Task = ({ task, apiToken, updateTasks }) => {
   const handleChange = () => {
     setIsLoading(true);
     markDone(apiToken, task["_id"]).then((id) => {
-      updateTasks(id)
-      setIsLoading(false)
+      updateTasks(id);
+      setIsLoading(false);
     });
   };
 
@@ -18,7 +19,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
     <li className="flex items-center gap-3 px-2 py-3 hover:bg-neutral-50 text-base">
       {isLoading ? (
         <LoadingSpinner height="h-5" width="w-5" />
-      ) : (
+      ) : task.db === "Tasks" ? (
         <input
           type="checkbox"
           checked={checked}
@@ -31,6 +32,8 @@ const Task = ({ task, apiToken, updateTasks }) => {
             setChecked(false);
           }}
         />
+      ) : (
+        <HiFlag size={20} className="text-primary"/>
       )}
       <label>{task.title}</label>
     </li>

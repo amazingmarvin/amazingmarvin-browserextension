@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TaskList from "../components/TaskList";
 import BottomMenu from "../components/BottomMenu";
 import OnboardingPage from "../components/OnboardingPage";
+import AddTask from "../components/AddTask";
 import { getStoredToken } from "../utils/storage";
 
 const App = () => {
@@ -26,7 +27,7 @@ const App = () => {
       ) : (
         <>
           {activeTab === "today" && <TaskList apiToken={apiToken}/>}
-          {activeTab === "add-task" && <div>creating task</div>}
+          {activeTab === "add-task" && <AddTask />}
           <BottomMenu activeTab={activeTab} setActiveTab={setActiveTab} />
         </>
       )}

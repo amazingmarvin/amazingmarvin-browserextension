@@ -35,3 +35,9 @@ export function dateDiffInDays(a, b) {
 
   return difference > 0 ? `+${difference}` : difference.toString();
 }
+
+export function isValidDate(dateString) {
+  const regEx = /^\d{4}-\d{2}-\d{2}$/
+
+  return dateString.match(regEx) ? true : false;
+}

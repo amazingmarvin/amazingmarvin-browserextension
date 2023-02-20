@@ -3,6 +3,7 @@ import Task from "./Task";
 import TaskListHeader from "./TaskListHeader";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
+import {setBadge} from "../utils/badge";
 
 const TaskList = ({ apiToken }) => {
   console.log(apiToken);
@@ -14,6 +15,7 @@ const TaskList = ({ apiToken }) => {
     getTasks(apiToken, day).then((tasks) => {
       setTasks(tasks);
       setIsLoading(false);
+      setBadge(tasks.length)
     });
   }, [day]);
 

@@ -6,17 +6,24 @@ import { BsCalendarX } from "react-icons/bs";
 
 import AddTaskTitle from "./AddTaskTitle";
 import AddTaskDate from "./AddTaskDate";
+import AddTaskDatePicker from "./AddTaskDatePicker";
 
-import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import "../day-picker.css";
 
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
-
   const [scheduleDate, setScheduleDate] = useState("unassigned");
-  const [selected, setSelected] = useState(new Date());
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [dueDate, setDueDate] = useState("unassigned");
+
+  const [scheduleDatePicker, setScheduleDatePicker] = useState({
+    visible: false,
+    selectedDate: isValidDate(scheduleDate) || new Date(),
+  });
+  const [dueDatePicker, setDueDatePicker] = useState({
+    visible: false,
+    selectedDate: isValidDate(dueDate) || new Date(),
+  });
 
   const scheduleDateButtons = [
     {
@@ -24,7 +31,7 @@ const AddTask = () => {
       icon: <HiSun size={22} />,
       onChange: () => {
         setScheduleDate("today");
-      }
+      },
     },
     {
       value: "tomorrow",
@@ -38,10 +45,16 @@ const AddTask = () => {
       value: isValidDate(scheduleDate),
       icon: <HiCalendar size={22} />,
       onClick: () => {
-        setDatePickerVisible(!datePickerVisible);
+        setScheduleDatePicker({
+          ...scheduleDatePicker,
+          visible: !scheduleDatePicker.visible,
+        });
       },
       onChange: () => {
-        setDatePickerVisible(!datePickerVisible);
+        setScheduleDatePicker({
+          ...scheduleDatePicker,
+          visible: !scheduleDatePicker.visible,
+        });
       },
     },
     {
@@ -49,11 +62,51 @@ const AddTask = () => {
       icon: <BsCalendarX size={20} />,
       onChange: () => {
         setScheduleDate("unassigned");
-      }
+      },
+    },
+  ];
+  const dueDateButtons = [
+    {
+      value: "today",
+      icon: <HiSun size={22} />,
+      onChange: () => {
+        setDueDate("today");
+      },
+    },
+    {
+      value: "tomorrow",
+      icon: <HiOutlineMoon size={22} />,
+      onChange: () => {
+        setDueDate("tomorrow");
+      },
+    },
+    {
+      isDatePicker: true,
+      value: isValidDate(dueDate),
+      icon: <HiCalendar size={22} />,
+      onClick: () => {
+        setDueDatePicker({
+          ...dueDatePicker,
+          visible: !dueDatePicker.visible,
+        });
+      },
+      onChange: () => {
+        setDueDatePicker({
+          ...dueDatePicker,
+          visible: !dueDatePicker.visible,
+        });
+      },
+    },
+    {
+      value: "unassigned",
+      icon: <BsCalendarX size={20} />,
+      onChange: () => {
+        setDueDate("unassigned");
+      },
     },
   ];
 
-  return !datePickerVisible ? (
+  return !(scheduleDatePicker.visible || dueDatePicker.visible) ? (
     <div className="form-control w-full p-5 gap-4">
       <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
@@ -63,39 +116,46 @@ const AddTask = () => {
         buttons={scheduleDateButtons}
       />
 
+      <AddTaskDate type="Due date" date={dueDate} buttons={dueDateButtons} />
+
       <button className="btn btn-primary text-white">Create Task</button>
     </div>
+  ) : scheduleDatePicker.visible ? (
+    <AddTaskDatePicker
+      selectedDate={scheduleDatePicker.selectedDate}
+      handleSelect={(selectedDate) => {
+        setScheduleDate(formatDate(selectedDate));
+        setScheduleDatePicker({
+          ...scheduleDatePicker,
+          selectedDate,
+          visible: false,
+        });
+      }}
+      setDatePickerVisible={() => {
+        setScheduleDatePicker({
+          ...scheduleDatePicker,
+          visible: false,
+        });
+      }}
+    />
   ) : (
-    <div className="static grid place-content-center pt-4">
-      <DayPicker
-        mode="single"
-        selected={selected}
-        onSelect={(selectedDate) => {
-          setScheduleDate(formatDate(selectedDate));
-          setSelected(selectedDate);
-          setDatePickerVisible(false);
-        }}
-      />
-      <button
-        className="btn btn-circle btn-outline btn-sm absolute top-2 right-2"
-        onClick={() => setDatePickerVisible(false)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-    </div>
+    <AddTaskDatePicker
+      selectedDate={dueDatePicker.selectedDate}
+      handleSelect={(selectedDate) => {
+        setDueDate(formatDate(selectedDate));
+        setDueDatePicker({
+          ...dueDatePicker,
+          selectedDate,
+          visible: false,
+        });
+      }}
+      setDatePickerVisible={() => {
+        setDueDatePicker({
+          ...dueDatePicker,
+          visible: false,
+        });
+      }}
+    />
   );
 };
 

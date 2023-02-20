@@ -4,27 +4,22 @@ import { useState } from "react";
 import { formatDate, isValidDate } from "../utils/dates";
 import { BsCalendarX } from "react-icons/bs";
 
+import AddTaskTitle from "./AddTaskTitle";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import '../day-picker.css';
 
 const AddTask = () => {
+  const [taskTitle, setTaskTitle] = useState("")
   const [scheduleDate, setScheduleDate] = useState("unassigned");
   const [selected, setSelected] = useState(new Date());
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   return !datePickerVisible ? (
     <div className="form-control w-full p-5 gap-4">
-      <div>
-        <label className="label">
-          <span className="label-text text-neutral">Task title</span>
-        </label>
-        <input
-          type="text"
-          placeholder="Enter task title"
-          className="input input-bordered input-primary w-full"
-        />
-      </div>
+
+      <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
+
 
       <div>
         <label className="label">

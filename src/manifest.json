@@ -13,6 +13,10 @@
     "default_title": "Amazing Marvin",
     "default_popup": "popup/popup.html"
   },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "host_permissions": ["https://serv.amazingmarvin.com/api/*"],
   "permissions": [
     "storage"

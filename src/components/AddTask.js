@@ -11,7 +11,7 @@ import AddTaskDuration from "./AddTaskDuration";
 import AddTaskNote from "./AddTaskNote";
 
 import "react-day-picker/dist/style.css";
-import "../day-picker.css";
+import "../styles/day-picker.css";
 
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");

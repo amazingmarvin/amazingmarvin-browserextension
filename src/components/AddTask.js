@@ -7,6 +7,7 @@ import { BsCalendarX } from "react-icons/bs";
 import AddTaskTitle from "./AddTaskTitle";
 import AddTaskDate from "./AddTaskDate";
 import AddTaskDatePicker from "./AddTaskDatePicker";
+import AddTaskDuration from "./AddTaskDuration";
 
 import "react-day-picker/dist/style.css";
 import "../day-picker.css";
@@ -15,6 +16,7 @@ const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [scheduleDate, setScheduleDate] = useState("unassigned");
   const [dueDate, setDueDate] = useState("unassigned");
+  const [timeEstimate, setTimeEstimate] = useState(1200000);
 
   const [scheduleDatePicker, setScheduleDatePicker] = useState({
     visible: false,
@@ -105,9 +107,20 @@ const AddTask = () => {
       },
     },
   ];
+  const timeEstimateButtons = [
+    { text: "5m", value: 300000 },
+    { text: "10m", value: 600000 },
+    { text: "15m", value: 900000 },
+    { text: "20m", value: 1200000 },
+    { text: "30m", value: 1800000 },
+    { text: "45m", value: 2700000 },
+    { text: "1h", value: 3600000 },
+    { text: "1h 30m", value: 5400000 },
+    { text: "2h", value: 7200000 },
+  ];
 
   return !(scheduleDatePicker.visible || dueDatePicker.visible) ? (
-    <div className="form-control w-full p-5 gap-4">
+    <div className="form-control w-full p-5 gap-2">
       <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
       <AddTaskDate
@@ -117,6 +130,12 @@ const AddTask = () => {
       />
 
       <AddTaskDate type="Due date" date={dueDate} buttons={dueDateButtons} />
+
+      <AddTaskDuration
+        timeEstimate={timeEstimate}
+        setTimeEstimate={setTimeEstimate}
+        timeEstimateButtons={timeEstimateButtons}
+      />
 
       <button className="btn btn-primary text-white">Create Task</button>
     </div>

@@ -8,6 +8,7 @@ import AddTaskTitle from "./AddTaskTitle";
 import AddTaskDate from "./AddTaskDate";
 import AddTaskDatePicker from "./AddTaskDatePicker";
 import AddTaskDuration from "./AddTaskDuration";
+import AddTaskNote from "./AddTaskNote";
 
 import "react-day-picker/dist/style.css";
 import "../day-picker.css";
@@ -17,6 +18,7 @@ const AddTask = () => {
   const [scheduleDate, setScheduleDate] = useState("unassigned");
   const [dueDate, setDueDate] = useState("unassigned");
   const [timeEstimate, setTimeEstimate] = useState(1200000);
+  const [note, setNote] = useState("");
 
   const [scheduleDatePicker, setScheduleDatePicker] = useState({
     visible: false,
@@ -122,6 +124,8 @@ const AddTask = () => {
   return !(scheduleDatePicker.visible || dueDatePicker.visible) ? (
     <div className="form-control w-full p-5 gap-2">
       <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
+
+      <AddTaskNote note={note} setNote={setNote} />
 
       <AddTaskDate
         type="Schedule date"

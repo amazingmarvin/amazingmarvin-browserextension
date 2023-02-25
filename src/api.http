@@ -1,0 +1,7 @@
+### Get Today's tasks
+GET https://serv.amazingmarvin.com/api/todayItems
+X-API-Token: {{apiToken}}
+
+### Get Categories/Project
+GET https://serv.amazingmarvin.com/api/categories
+X-API-Token: {{apiToken}}

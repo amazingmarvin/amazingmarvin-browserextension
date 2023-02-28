@@ -5,6 +5,7 @@ import { verifyToken } from "../utils/api";
 const OptionsContentApi = () => {
   const [apiToken, setApiToken] = useState("");
   const [wrongToken, setWrongToken] = useState(false);
+  const [successToken, setSuccessToken] = useState(false);
 
   useEffect(() => {
     getStoredToken().then((token) => {
@@ -41,6 +42,10 @@ const OptionsContentApi = () => {
     if (tokenResult) {
       setWrongToken(false);
       saveTokenToStorageAndState(tokenResult);
+      setSuccessToken(true);
+      setInterval(() => {
+        setSuccessToken(false);
+      }, 1500);
     }
   };
 
@@ -63,8 +68,11 @@ const OptionsContentApi = () => {
         {wrongToken && (
           <p className="text-red-500 mt-3">
             Wrong token. Please verify that you copied apiToken or
-            fullAccessToken value
+            fullAccessToken value.
           </p>
+        )}
+        {successToken && (
+          <p className="text-green-500 mt-3">Token saved successfully</p>
         )}
         <div className="form-control w-full max-w-xs mt-3 mb-3">
           <input

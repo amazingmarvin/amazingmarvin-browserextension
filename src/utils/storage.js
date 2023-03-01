@@ -13,3 +13,11 @@ export function setStoredToken(token) {
     });
   });
 }
+
+export function setStoredCategories(categories) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ categories: categories }).then(() => {
+      resolve();
+    });
+  });
+}

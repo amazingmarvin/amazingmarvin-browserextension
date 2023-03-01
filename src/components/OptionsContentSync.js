@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCategories } from "../utils/api";
 
 import MarvinButton from "./MarvinButton";
 import LoadingSpinner from "./LoadingSpinner";
+import { getLastSyncedCategories } from "../utils/storage";
 
 const OptionsContentSync = () => {
+  const [lastSyncedCategories, setLastSyncedCategories] = useState("");
   const [loadingCategories, setLoadingCategories] = useState(false);
   const fetchCategories = () => {
     setLoadingCategories(true);
     getCategories().then(() => {
       setLoadingCategories(false);
-      console.log("Categories updated");
     });
   };
+
+  useEffect(() => {
+    getLastSyncedCategories().then((lastSyncedCategories) => {
+      if (!lastSyncedCategories) {
+        return;
+      }
+      setLastSyncedCategories(lastSyncedCategories);
+    });
+  }, [lastSyncedCategories, loadingCategories]);
 
   return (
     <>
@@ -25,6 +35,9 @@ const OptionsContentSync = () => {
             below. Use this setting if you just added a new category or a
             project in Marvin and need it in the "Set parent" picker when
             creating a new task.
+          </p>
+          <p className="text-[12px] text-slate-600 text-center mt-2">
+            {lastSyncedCategories && `Last synced at: ${lastSyncedCategories}`}
           </p>
           <div className="card-actions justify-center mt-4">
             <MarvinButton onClick={fetchCategories}>

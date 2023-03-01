@@ -1,5 +1,9 @@
 import { formatDate } from "./dates";
-import { getStoredToken, setStoredCategories } from "./storage";
+import {
+  getStoredToken,
+  setLastSyncedCategories,
+  setStoredCategories,
+} from "./storage";
 
 export async function verifyToken(token) {
   const res = await fetch("https://serv.amazingmarvin.com/api/test", {
@@ -97,7 +101,7 @@ export async function getCategories() {
 
   if (res.ok) {
     let categories = await res.json();
-    console.log(categories);
+    await setLastSyncedCategories();
     return setStoredCategories(categories);
   }
 

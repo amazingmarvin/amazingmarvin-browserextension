@@ -21,3 +21,21 @@ export function setStoredCategories(categories) {
     });
   });
 }
+
+export function getLastSyncedCategories() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["lastSyncedCategories"]).then((result) => {
+      resolve(result.lastSyncedCategories);
+    });
+  });
+}
+export function setLastSyncedCategories(date = new Date()) {
+  return new Promise((resolve) => {
+    let dateString = date.toDateString();
+    let timeString = date.toTimeString();
+    let syncedTime = `${dateString} - ${timeString}`;
+    chrome.storage.local.set({ lastSyncedCategories: syncedTime }).then(() => {
+      resolve();
+    });
+  });
+}

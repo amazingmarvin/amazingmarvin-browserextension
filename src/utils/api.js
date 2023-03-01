@@ -1,4 +1,5 @@
 import { formatDate } from "./dates";
+import { getStoredToken, setStoredCategories } from "./storage";
 
 export async function verifyToken(token) {
   const res = await fetch("https://serv.amazingmarvin.com/api/test", {
@@ -76,6 +77,28 @@ export async function markDone(token, id) {
     return new Promise((resolve) => {
       resolve(id);
     });
+  }
+
+  if (!res.ok) {
+    console.log(res);
+  }
+}
+
+// Fetches categories from API and stores them in local storage. Returns a promise.
+export async function getCategories() {
+  let token = await getStoredToken().then((token) => token);
+
+  const res = await fetch(`https://serv.amazingmarvin.com/api/categories`, {
+    method: "GET",
+    headers: {
+      ...token,
+    },
+  });
+
+  if (res.ok) {
+    let categories = await res.json();
+    console.log(categories);
+    return setStoredCategories(categories);
   }
 
   if (!res.ok) {

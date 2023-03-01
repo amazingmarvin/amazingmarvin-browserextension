@@ -12,7 +12,7 @@ const App = () => {
   ];
 
   return (
-    <div className="my-0 mx-auto h-screen w-3/5 pt-12">
+    <div className="my-0 mx-auto w-3/5 pt-12">
       <h1 className="text-2xl text-center text-primary">Settings</h1>
       <div className="mt-12 grid grid-cols-4">
         <OptionsSidebar

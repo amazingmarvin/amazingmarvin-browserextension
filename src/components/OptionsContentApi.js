@@ -1,6 +1,7 @@
 import { getStoredToken, setStoredToken } from "../utils/storage";
 import { useEffect, useState } from "react";
 import { verifyToken } from "../utils/api";
+import MarvinButton from "./MarvinButton";
 
 const OptionsContentApi = () => {
   const [apiToken, setApiToken] = useState("");
@@ -74,7 +75,7 @@ const OptionsContentApi = () => {
         {successToken && (
           <p className="text-green-500 mt-3">Token saved successfully</p>
         )}
-        <div className="form-control w-full max-w-xs mt-3 mb-3">
+        <div className="flex flex-row justify-around w-full mt-3 mb-3">
           <input
             type="text"
             placeholder="Paste your token here"
@@ -82,11 +83,7 @@ const OptionsContentApi = () => {
             onChange={(event) => setApiToken(event.target.value.trim())}
             className="input input-bordered w-full max-w-xs"
           />
-        </div>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary text-white" onClick={handleSave}>
-            Save
-          </button>
+          <MarvinButton onClick={handleSave}>Save</MarvinButton>
         </div>
       </div>
     </div>

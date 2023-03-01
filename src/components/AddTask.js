@@ -12,6 +12,7 @@ import AddTaskNote from "./AddTaskNote";
 
 import "react-day-picker/dist/style.css";
 import "../styles/day-picker.css";
+import MarvinButton from "./MarvinButton";
 
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
@@ -141,7 +142,7 @@ const AddTask = () => {
         timeEstimateButtons={timeEstimateButtons}
       />
 
-      <button className="btn btn-primary text-white">Create Task</button>
+      <MarvinButton>Create Task</MarvinButton>
     </div>
   ) : scheduleDatePicker.visible ? (
     <AddTaskDatePicker

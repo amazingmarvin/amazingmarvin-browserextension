@@ -9,6 +9,8 @@ import AddTaskDate from "./AddTaskDate";
 import AddTaskDatePicker from "./AddTaskDatePicker";
 import AddTaskDuration from "./AddTaskDuration";
 import AddTaskNote from "./AddTaskNote";
+import AddTaskParent from "./AddTaskParent";
+import AddTaskParentPicker from "./AddTaskParentPicker";
 
 import "react-day-picker/dist/style.css";
 import "../styles/day-picker.css";
@@ -17,18 +19,19 @@ import MarvinButton from "./MarvinButton";
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [scheduleDate, setScheduleDate] = useState("unassigned");
-  const [dueDate, setDueDate] = useState("unassigned");
-  const [timeEstimate, setTimeEstimate] = useState(1200000);
-  const [note, setNote] = useState("");
-
   const [scheduleDatePicker, setScheduleDatePicker] = useState({
     visible: false,
     selectedDate: isValidDate(scheduleDate) || new Date(),
   });
+  const [dueDate, setDueDate] = useState("unassigned");
   const [dueDatePicker, setDueDatePicker] = useState({
     visible: false,
     selectedDate: isValidDate(dueDate) || new Date(),
   });
+  const [timeEstimate, setTimeEstimate] = useState(1200000);
+  const [note, setNote] = useState("");
+  const [parent, setParent] = useState({ title: "Inbox", _id: "" });
+  const [parentPickerVisible, setParentPickerVisible] = useState(false);
 
   const scheduleDateButtons = [
     {
@@ -122,64 +125,100 @@ const AddTask = () => {
     { text: "2h", value: 7200000 },
   ];
 
-  return !(scheduleDatePicker.visible || dueDatePicker.visible) ? (
-    <div className="form-control w-full p-5 gap-2">
-      <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
+  const displayElements = () => {
+    if (scheduleDatePicker.visible) {
+      return (
+        <AddTaskDatePicker
+          selectedDate={scheduleDatePicker.selectedDate}
+          handleSelect={(selectedDate) => {
+            setScheduleDate(formatDate(selectedDate));
+            setScheduleDatePicker({
+              ...scheduleDatePicker,
+              selectedDate,
+              visible: false,
+            });
+          }}
+          setDatePickerVisible={() => {
+            setScheduleDatePicker({
+              ...scheduleDatePicker,
+              visible: false,
+            });
+          }}
+        />
+      );
+    }
 
-      <AddTaskNote note={note} setNote={setNote} />
+    if (dueDatePicker.visible) {
+      return (
+        <AddTaskDatePicker
+          selectedDate={dueDatePicker.selectedDate}
+          handleSelect={(selectedDate) => {
+            setDueDate(formatDate(selectedDate));
+            setDueDatePicker({
+              ...dueDatePicker,
+              selectedDate,
+              visible: false,
+            });
+          }}
+          setDatePickerVisible={() => {
+            setDueDatePicker({
+              ...dueDatePicker,
+              visible: false,
+            });
+          }}
+        />
+      );
+    }
 
-      <AddTaskDate
-        type="Schedule date"
-        date={scheduleDate}
-        buttons={scheduleDateButtons}
-      />
+    if (parentPickerVisible) {
+      return (
+        <AddTaskParentPicker
+          parent={parent}
+          setParent={setParent}
+          setParentPickerVisible={setParentPickerVisible}
+        />
+      );
+    }
 
-      <AddTaskDate type="Due date" date={dueDate} buttons={dueDateButtons} />
+    return (
+      <div className="form-control w-full p-5 gap-2">
+        <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
-      <AddTaskDuration
-        timeEstimate={timeEstimate}
-        setTimeEstimate={setTimeEstimate}
-        timeEstimateButtons={timeEstimateButtons}
-      />
+        <AddTaskNote note={note} setNote={setNote} />
 
-      <MarvinButton>Create Task</MarvinButton>
-    </div>
-  ) : scheduleDatePicker.visible ? (
-    <AddTaskDatePicker
-      selectedDate={scheduleDatePicker.selectedDate}
-      handleSelect={(selectedDate) => {
-        setScheduleDate(formatDate(selectedDate));
-        setScheduleDatePicker({
-          ...scheduleDatePicker,
-          selectedDate,
-          visible: false,
-        });
-      }}
-      setDatePickerVisible={() => {
-        setScheduleDatePicker({
-          ...scheduleDatePicker,
-          visible: false,
-        });
-      }}
-    />
-  ) : (
-    <AddTaskDatePicker
-      selectedDate={dueDatePicker.selectedDate}
-      handleSelect={(selectedDate) => {
-        setDueDate(formatDate(selectedDate));
-        setDueDatePicker({
-          ...dueDatePicker,
-          selectedDate,
-          visible: false,
-        });
-      }}
-      setDatePickerVisible={() => {
-        setDueDatePicker({
-          ...dueDatePicker,
-          visible: false,
-        });
-      }}
-    />
+        <div className="flex flex-row justify-between">
+          <AddTaskDate
+            type="Schedule date"
+            date={scheduleDate}
+            buttons={scheduleDateButtons}
+          />
+
+          <AddTaskDate
+            type="Due date"
+            date={dueDate}
+            buttons={dueDateButtons}
+          />
+        </div>
+
+        <AddTaskDuration
+          timeEstimate={timeEstimate}
+          setTimeEstimate={setTimeEstimate}
+          timeEstimateButtons={timeEstimateButtons}
+        />
+
+        <AddTaskParent
+          parent={parent}
+          setParent={setParent}
+          setParentPickerVisible={setParentPickerVisible}
+        />
+
+        <MarvinButton>Create Task</MarvinButton>
+      </div>
+    );
+  };
+
+  return (
+    <div className="overflow-y-scroll scrollbar-hide">{displayElements()}</div>
   );
 };
 

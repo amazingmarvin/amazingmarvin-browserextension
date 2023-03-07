@@ -14,6 +14,14 @@ export function setStoredToken(token) {
   });
 }
 
+export function getStoredCategories() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["categories"]).then((result) => {
+      resolve(result.categories);
+    });
+  });
+}
+
 export function setStoredCategories(categories) {
   return new Promise((resolve) => {
     chrome.storage.local.set({ categories: categories }).then(() => {
@@ -31,9 +39,7 @@ export function getLastSyncedCategories() {
 }
 export function setLastSyncedCategories(date = new Date()) {
   return new Promise((resolve) => {
-    let dateString = date.toDateString();
-    let timeString = date.toTimeString();
-    let syncedTime = `${dateString} - ${timeString}`;
+    let syncedTime = `${date.toDateString()} - ${date.toTimeString()}`;
     chrome.storage.local.set({ lastSyncedCategories: syncedTime }).then(() => {
       resolve();
     });

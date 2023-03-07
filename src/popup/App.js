@@ -21,12 +21,12 @@ const App = () => {
   }, [onboarded]);
 
   return (
-    <div className="flex flex-col w-[400px] h-[400px] justify-between">
+    <div className="flex flex-col w-[400px] min-h-[400px] max-h-[600px] justify-between">
       {!onboarded ? (
         <OnboardingPage setApiToken={setApiToken} setOnboarded={setOnboarded} />
       ) : (
         <>
-          {activeTab === "today" && <TaskList apiToken={apiToken}/>}
+          {activeTab === "today" && <TaskList apiToken={apiToken} />}
           {activeTab === "add-task" && <AddTask />}
           <BottomMenu activeTab={activeTab} setActiveTab={setActiveTab} />
         </>

@@ -5,3 +5,7 @@ X-API-Token: {{apiToken}}
 ### Get Categories/Project
 GET https://serv.amazingmarvin.com/api/categories
 X-API-Token: {{apiToken}}
+
+### Get Labels
+GET https://serv.amazingmarvin.com/api/labels
+X-API-Token: {{apiToken}}

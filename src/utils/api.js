@@ -2,7 +2,9 @@ import { formatDate } from "./dates";
 import {
   getStoredToken,
   setLastSyncedCategories,
+  setLastSyncedLabels,
   setStoredCategories,
+  setStoredLabels,
 } from "./storage";
 
 export async function verifyToken(token) {
@@ -103,6 +105,27 @@ export async function getCategories() {
     let categories = await res.json();
     await setLastSyncedCategories();
     return setStoredCategories(categories);
+  }
+
+  if (!res.ok) {
+    console.log(res);
+  }
+}
+
+export async function getLabels() {
+  let token = await getStoredToken().then((token) => token);
+
+  const res = await fetch(`https://serv.amazingmarvin.com/api/labels`, {
+    method: "GET",
+    headers: {
+      ...token,
+    },
+  });
+
+  if (res.ok) {
+    let labels = await res.json();
+    await setLastSyncedLabels();
+    return setStoredLabels(labels);
   }
 
   if (!res.ok) {

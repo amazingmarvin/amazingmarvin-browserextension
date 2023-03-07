@@ -45,3 +45,35 @@ export function setLastSyncedCategories(date = new Date()) {
     });
   });
 }
+
+export function getStoredLabels() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["labels"]).then((result) => {
+      resolve(result.labels);
+    });
+  });
+}
+
+export function setStoredLabels(labels) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ labels: labels }).then(() => {
+      resolve();
+    });
+  });
+}
+
+export function getLastSyncedLabels() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["lastSyncedLabels"]).then((result) => {
+      resolve(result.lastSyncedLabels);
+    });
+  });
+}
+export function setLastSyncedLabels(date = new Date()) {
+  return new Promise((resolve) => {
+    let syncedTime = `${date.toDateString()} - ${date.toTimeString()}`;
+    chrome.storage.local.set({ lastSyncedLabels: syncedTime }).then(() => {
+      resolve();
+    });
+  });
+}

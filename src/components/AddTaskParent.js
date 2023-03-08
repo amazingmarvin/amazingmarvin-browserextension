@@ -2,7 +2,7 @@ const AddTaskParent = ({ parent, setParent, setParentPickerVisible }) => {
   return (
     <div>
       <label className="label">
-        <span className="label-text text-neutral">Set Project</span>
+        <span className="label-text text-neutral">Set Parent</span>
       </label>
 
       <div className="relative flex">

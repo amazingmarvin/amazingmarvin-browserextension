@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { formatDate, isValidDate } from "../utils/dates";
 
-import { HiCalendar, HiOutlineMoon, HiSun } from "react-icons/hi2";
-import { BsCalendarX } from "react-icons/bs";
+import { BsSun, BsMoon, BsCalendarPlus, BsCalendarX } from "react-icons/bs";
 
 import AddTaskTitle from "./AddTaskTitle";
 import AddTaskDate from "./AddTaskDate";
@@ -36,14 +35,14 @@ const AddTask = () => {
   const scheduleDateButtons = [
     {
       value: "today",
-      icon: <HiSun size={22} />,
+      icon: <BsSun size={20} />,
       onChange: () => {
         setScheduleDate("today");
       },
     },
     {
       value: "tomorrow",
-      icon: <HiOutlineMoon size={22} />,
+      icon: <BsMoon size={20} />,
       onChange: () => {
         setScheduleDate("tomorrow");
       },
@@ -51,7 +50,7 @@ const AddTask = () => {
     {
       isDatePicker: true,
       value: isValidDate(scheduleDate),
-      icon: <HiCalendar size={22} />,
+      icon: <BsCalendarPlus size={20} />,
       onClick: () => {
         setScheduleDatePicker({
           ...scheduleDatePicker,
@@ -76,14 +75,14 @@ const AddTask = () => {
   const dueDateButtons = [
     {
       value: "today",
-      icon: <HiSun size={22} />,
+      icon: <BsSun size={20} />,
       onChange: () => {
         setDueDate("today");
       },
     },
     {
       value: "tomorrow",
-      icon: <HiOutlineMoon size={22} />,
+      icon: <BsMoon size={20} />,
       onChange: () => {
         setDueDate("tomorrow");
       },
@@ -91,7 +90,7 @@ const AddTask = () => {
     {
       isDatePicker: true,
       value: isValidDate(dueDate),
-      icon: <HiCalendar size={22} />,
+      icon: <BsCalendarPlus size={20} />,
       onClick: () => {
         setDueDatePicker({
           ...dueDatePicker,

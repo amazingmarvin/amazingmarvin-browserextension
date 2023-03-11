@@ -10,6 +10,7 @@ import AddTaskDuration from "./AddTaskDuration";
 import AddTaskNote from "./AddTaskNote";
 import AddTaskParent from "./AddTaskParent";
 import AddTaskParentPicker from "./AddTaskParentPicker";
+import AddTaskLabels from "./AddTaskLabels";
 
 import "react-day-picker/dist/style.css";
 import "../styles/day-picker.css";
@@ -31,6 +32,7 @@ const AddTask = () => {
   const [note, setNote] = useState("");
   const [parent, setParent] = useState({ title: "Inbox", _id: "" });
   const [parentPickerVisible, setParentPickerVisible] = useState(false);
+  const [labels, setLabels] = useState([]);
 
   const scheduleDateButtons = [
     {
@@ -210,6 +212,8 @@ const AddTask = () => {
           setParent={setParent}
           setParentPickerVisible={setParentPickerVisible}
         />
+
+        <AddTaskLabels labels={labels} setLabels={setLabels} />
 
         <MarvinButton>Create Task</MarvinButton>
       </div>

@@ -1,4 +1,4 @@
-const MarvinLabel = ({ label, removeLabelHandler }) => {
+const MarvinLabel = ({ label, uncheckLabel }) => {
   // Label color is set as a CSS variable in order for Tailwind to generate the correct color classes
   // as using something like text-[label.color] doesn't work since Tailwind won't generate classes for those colors
   // https://tailwindcss.com/docs/content-configuration#classes-aren-t-generated
@@ -19,7 +19,7 @@ const MarvinLabel = ({ label, removeLabelHandler }) => {
         className="inline-flex items-center p-0.5 ml-2 text-sm text-white bg-transparent rounded-sm hover:bg-white hover:text-slate-700"
         data-dismiss-target={label._id}
         aria-label="Remove"
-        onClick={() => removeLabelHandler(label._id)}
+        onClick={() => uncheckLabel(label._id)}
       >
         <svg
           aria-hidden="true"

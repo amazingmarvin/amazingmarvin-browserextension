@@ -16,3 +16,48 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
+
+/* Used this article to create a custom checkmark
+ https://moderncss.dev/pure-css-custom-checkbox-style/
+*/
+
+input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    /* For iOS < 15 */
+    /* Not removed via appearance */
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.3rem;
+
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]:hover,
+input[type="checkbox"]:focus {
+    border-color: #1CC5CB;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #1CC5CB;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    background: url("../static/checkmark.svg") no-repeat center center;
+    background-size: cover;
+    transition: 120ms ease-in-out;
+}
+
+input[type="checkbox"].big:checked::before {
+    width: 0.9rem;
+    height: 0.9rem;
+}

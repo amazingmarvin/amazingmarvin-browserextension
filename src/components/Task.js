@@ -23,7 +23,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
         <input
           type="checkbox"
           checked={checked}
-          className="checkbox checkbox-primary"
+          className="w-6 h-6 big"
           onChange={handleChange}
           onMouseEnter={() => {
             setChecked(true);
@@ -33,7 +33,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
           }}
         />
       ) : (
-        <HiFlag size={20} className="text-primary"/>
+        <HiFlag size={20} className="text-primary" />
       )}
       <label>{task.title}</label>
     </li>

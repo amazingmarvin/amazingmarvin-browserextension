@@ -14,12 +14,11 @@ const AddTaskDuration = ({
         key={button.value}
         className={classes}
         onClick={() => {
-          console.log("clicked (onClick) on button: ", button.text);
           if (timeEstimate === button.value) {
             setTimeEstimate(0);
             return;
           }
-          
+
           setTimeEstimate(button.value);
         }}
       >

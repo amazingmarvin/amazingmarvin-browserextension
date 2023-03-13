@@ -14,7 +14,7 @@ const AddTaskParent = ({ parent, setParent, setParentPickerVisible }) => {
           className="rounded-none rounded-r-lg bg-gray-50 border border-[#1CC5CB] text-gray-900 focus-visible:outline-none focus:ring-2 focus:ring-[#1CC5CB] focus:ring-offset-2 focus:border focus:border-[#1CC5CB] block flex-1 min-w-0 w-full text-sm p-2.5"
           placeholder="Search for a project"
           value={parent.title}
-          onChange={(e) => setParent({ ...parent, title: e.target.value })}
+          onChange={(e) => setParent({ title: e.target.value, _id: "" })}
         />
         <button
           className="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-[#1CC5CB] rounded-r-lg border border-[#1CC5CB] hover:bg-white hover:text-[#1CC5CB]"

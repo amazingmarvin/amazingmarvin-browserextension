@@ -28,7 +28,7 @@ const AddTask = () => {
     visible: false,
     selectedDate: isValidDate(dueDate) || new Date(),
   });
-  const [timeEstimate, setTimeEstimate] = useState(1200000);
+  const [timeEstimate, setTimeEstimate] = useState();
   const [note, setNote] = useState("");
   const [parent, setParent] = useState({ title: "Inbox", _id: "" });
   const [parentPickerVisible, setParentPickerVisible] = useState(false);
@@ -182,40 +182,46 @@ const AddTask = () => {
     }
 
     return (
-      <div className="form-control w-full p-5 gap-2">
-        <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
+      <div className="form-control w-full gap-4 divide-y">
+        <div className="form-control w-full pt-2 px-5">
+          <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
-        <AddTaskNote note={note} setNote={setNote} />
+          <AddTaskNote note={note} setNote={setNote} />
 
-        <div className="flex flex-row justify-between">
-          <AddTaskDate
-            type="Schedule date"
-            date={scheduleDate}
-            buttons={scheduleDateButtons}
+          <div className="flex flex-row justify-between">
+            <AddTaskDate
+              type="Schedule date"
+              date={scheduleDate}
+              buttons={scheduleDateButtons}
+            />
+
+            <AddTaskDate
+              type="Due date"
+              date={dueDate}
+              buttons={dueDateButtons}
+            />
+          </div>
+
+          <AddTaskDuration
+            timeEstimate={timeEstimate}
+            setTimeEstimate={setTimeEstimate}
+            timeEstimateButtons={timeEstimateButtons}
           />
 
-          <AddTaskDate
-            type="Due date"
-            date={dueDate}
-            buttons={dueDateButtons}
+          <AddTaskParent
+            parent={parent}
+            setParent={setParent}
+            setParentPickerVisible={setParentPickerVisible}
           />
+
+          <AddTaskLabels labels={labels} setLabels={setLabels} />
         </div>
 
-        <AddTaskDuration
-          timeEstimate={timeEstimate}
-          setTimeEstimate={setTimeEstimate}
-          timeEstimateButtons={timeEstimateButtons}
-        />
-
-        <AddTaskParent
-          parent={parent}
-          setParent={setParent}
-          setParentPickerVisible={setParentPickerVisible}
-        />
-
-        <AddTaskLabels labels={labels} setLabels={setLabels} />
-
-        <MarvinButton>Create Task</MarvinButton>
+        <div className="flex flex-row justify-center py-4 px-2">
+          <MarvinButton width="w-full" disabled={!taskTitle}>
+            Create Task
+          </MarvinButton>
+        </div>
       </div>
     );
   };

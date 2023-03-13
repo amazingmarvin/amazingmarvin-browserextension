@@ -132,3 +132,29 @@ export async function getLabels() {
     console.log(res);
   }
 }
+
+export async function addTask(data) {
+  let token = await getStoredToken().then((token) => token);
+  data.timeZoneOffset = new Date().getTimezoneOffset();
+
+  const res = await fetch(`https://serv.amazingmarvin.com/api/addTask`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...token,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (res.ok) {
+    return new Promise((resolve) => {
+      resolve("success");
+    });
+  }
+
+  if (!res.ok) {
+    return new Promise((resolve) => {
+      resolve("fail");
+    });
+  }
+}

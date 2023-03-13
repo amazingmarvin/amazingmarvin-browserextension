@@ -26,12 +26,18 @@ const AddTaskLabelsDropdown = ({ allLabels, labels, checkLabel }) => {
     );
   };
 
+  const classes = `
+    w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-primary/[0.8] focus:outline-none ${
+      labels.length ? "mt-4" : ""
+    }
+  `;
+
   return (
     <div>
       <button
         id="dropdownSearchButton"
         data-dropdown-toggle="dropdownSearch"
-        className="w-full flex items-center justify-center px-4 py-2 mt-4 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-primary/[0.8] focus:outline-none"
+        className={classes}
         type="button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >

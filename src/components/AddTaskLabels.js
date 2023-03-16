@@ -8,6 +8,10 @@ const AddTaskLabels = ({ labels, setLabels }) => {
 
   useEffect(() => {
     getStoredLabels().then((storedLabels) => {
+      if (!storedLabels || storedLabels.length === 0) {
+        return;
+      }
+
       let allLabels = storedLabels.map((storedLabel) => {
         storedLabel.selected = false;
         return storedLabel;

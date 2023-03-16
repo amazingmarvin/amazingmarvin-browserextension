@@ -6,7 +6,8 @@ const AddTaskNote = ({ note, setNote }) => {
       </label>
       <textarea
         placeholder="Task note..."
-        className="textarea textarea-bordered textarea-primary textarea-md w-full"
+        rows={1}
+        className="textarea textarea-bordered textarea-primary w-full"
         onChange={(event) => {
           setNote(event.target.value);
         }}

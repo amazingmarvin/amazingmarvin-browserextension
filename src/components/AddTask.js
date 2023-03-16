@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { formatDate, isValidDate } from "../utils/dates";
-import { addTask, markDone } from "../utils/api";
+import { addTask } from "../utils/api";
 
 import { BsSun, BsMoon, BsCalendarPlus, BsCalendarX } from "react-icons/bs";
 

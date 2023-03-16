@@ -12,7 +12,6 @@ const App = () => {
 
   useEffect(() => {
     getStoredToken().then((token) => {
-      console.log("token from storage", token);
       if (token) {
         setOnboarded(true);
         setApiToken(token);

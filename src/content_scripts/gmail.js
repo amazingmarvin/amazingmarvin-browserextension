@@ -3,6 +3,15 @@ let logo = chrome.runtime.getURL("static/logo.png");
 let tables;
 let emailElement;
 
+function changeClasses() {
+  marvinSuccessMessage.classList.remove("marvinSuccessMessageHidden");
+  marvinSuccessMessage.classList.add("marvinSuccessMessageVisible");
+  setTimeout(() => {
+    marvinSuccessMessage.classList.remove("marvinSuccessMessageVisible");
+    marvinSuccessMessage.classList.add("marvinSuccessMessageHidden");
+  }, 2000);
+}
+
 // Marvin button for Table view
 
 let tableMarvinButton = document.createElement("li");
@@ -18,10 +27,14 @@ tableMarvinButton.onclick = () => {
       "data-legacy-last-message-id"
     );
 
-  chrome.runtime.sendMessage({
+  let message = chrome.runtime.sendMessage({
     message: "sendTaskFromTable",
     emailSubject: emailSubject.trim(),
     emailLink,
+  });
+
+  message.then(() => {
+    changeClasses();
   });
 };
 
@@ -67,16 +80,62 @@ marvinButtonContainer.onclick = () => {
       "data-legacy-thread-id"
     );
 
-  chrome.runtime.sendMessage({
+  let message = chrome.runtime.sendMessage({
     message: "sendTaskFromSingleView",
     emailSubject,
     emailLink,
+  });
+
+  message.then(() => {
+    changeClasses();
   });
 };
 
 let singleMarvinButton = document.createElement("div");
 singleMarvinButton.style.cssText = `background: url(${logo}) no-repeat center center; background-size: 20px; width: 20px; height: 20px; border-radius: 50%`;
 singleMarvinButton.classList.add("ase", "T-I-J3", "J-J5-Ji");
+
+// Success Message
+
+let marvinSuccessMessage = document.createElement("div");
+marvinSuccessMessage.textContent = "Task successfully added to Marvin!";
+document.body.appendChild(marvinSuccessMessage);
+
+let marvinSuccessMessageStyles = document.createElement("style");
+marvinSuccessMessageStyles.innerHTML = `
+    .marvinSuccessMessageVisible {
+        display: grid;
+        place-items: center;
+    }
+
+    .marvinSuccessMessageHidden {
+        display: none;
+    }
+
+    .marvinSuccessMessage {
+        background: linear-gradient(165deg, #26d6c4 0%, #10b1d3 100%);
+        box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
+        color: white;
+        font-size: 18px;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        height: 75px;
+        z-index: 999;
+        border-radius: 10px;
+        text-align: center;
+        padding: 10px;
+    }`;
+document
+  .getElementsByTagName("head")[0]
+  .appendChild(marvinSuccessMessageStyles);
+
+marvinSuccessMessage.classList.add(
+  "marvinSuccessMessage",
+  "marvinSuccessMessageHidden"
+);
 
 setInterval(() => {
   tables = document.querySelectorAll("table.F.cf.zt");

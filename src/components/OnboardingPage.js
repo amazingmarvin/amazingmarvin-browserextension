@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { verifyToken } from "../utils/api";
+import { verifyToken, getLabels, getCategories } from "../utils/api";
 import { setStoredToken } from "../utils/storage";
 
 const OnboardingPage = ({ setApiToken, setOnboarded }) => {
@@ -9,12 +9,12 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
   const saveTokenToStorageAndState = (tokenObject) => {
     setStoredToken(tokenObject).then(() => {
       setApiToken(tokenObject);
-      setOnboarded(true);
     });
   };
 
   const handleSave = async () => {
-    let tokenResult = await verifyToken(token);
+    let justTokenPart = token.split(" ").at(-1);
+    let tokenResult = await verifyToken(justTokenPart);
 
     if (!tokenResult) {
       setWrongToken(true);
@@ -22,7 +22,10 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
 
     if (tokenResult) {
       console.log("saving token");
-      saveTokenToStorageAndState(tokenResult);
+      await saveTokenToStorageAndState(tokenResult);
+      await getLabels();
+      await getCategories();
+      setOnboarded(true);
     }
   };
 
@@ -31,8 +34,8 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
       <div className="card-body items-center text-center">
         <h2 className="card-title text-primary">Hello!</h2>
         <p>
-          To start using Amazing Marvin extension, you will have to add your Amazing Marvin API
-          token. You can get it using{" "}
+          To start using Amazing Marvin extension, you will have to add your
+          Amazing Marvin API token. You can get it using{" "}
           <a
             href="https://app.amazingmarvin.com/pre?api"
             target="_blank"

@@ -77,3 +77,19 @@ export function setLastSyncedLabels(date = new Date()) {
     });
   });
 }
+
+export function getStoredGmailSettings() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["gmailSettings"]).then((result) => {
+      resolve(result.gmailSettings);
+    });
+  });
+}
+
+export function setStoredGmailSettings(settings) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ gmailSettings: settings }).then(() => {
+      resolve();
+    });
+  });
+}

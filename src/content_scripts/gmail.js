@@ -1,108 +1,114 @@
-let logo = chrome.runtime.getURL("static/logo.png");
+import { getStoredGmailSettings } from "../utils/storage";
 
-let tables;
-let emailElement;
+getStoredGmailSettings().then((settings) => {
+  let isDisplayedInInbox = settings.displayInInbox;
+  let isDisplayedInSingleEmail = settings.displayInSingleEmail;
 
-function changeClasses() {
-  marvinSuccessMessage.classList.remove("marvinSuccessMessageHidden");
-  marvinSuccessMessage.classList.add("marvinSuccessMessageVisible");
-  setTimeout(() => {
-    marvinSuccessMessage.classList.remove("marvinSuccessMessageVisible");
-    marvinSuccessMessage.classList.add("marvinSuccessMessageHidden");
-  }, 2000);
-}
+  let logo = chrome.runtime.getURL("static/logo.png");
 
-// Marvin button for Table view
+  let tables;
+  let emailElement;
 
-let tableMarvinButton = document.createElement("li");
-tableMarvinButton.classList.add("bqX");
-tableMarvinButton.style.cssText = `background: url(${logo}) no-repeat center center; background-size: 20px; width: 20px; height: 20px; margin-right: 10px; margin-left: 10px; border-radius: 50%`;
-tableMarvinButton.setAttribute("data-tooltip", "Add to Marvin");
-tableMarvinButton.onclick = () => {
-  let emailSubject =
-    emailElement.childNodes[5].childNodes[0].childNodes[0].childNodes[0]
-      .childNodes[0].childNodes[0].innerText;
-  let emailLink =
-    emailElement.childNodes[5].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].getAttribute(
-      "data-legacy-last-message-id"
-    );
+  function changeClasses() {
+    marvinSuccessMessage.classList.remove("marvinSuccessMessageHidden");
+    marvinSuccessMessage.classList.add("marvinSuccessMessageVisible");
+    setTimeout(() => {
+      marvinSuccessMessage.classList.remove("marvinSuccessMessageVisible");
+      marvinSuccessMessage.classList.add("marvinSuccessMessageHidden");
+    }, 2000);
+  }
 
-  let message = chrome.runtime.sendMessage({
-    message: "sendTaskFromTable",
-    emailSubject: emailSubject.trim(),
-    emailLink,
-  });
+  // Marvin button for Table view
 
-  message.then(() => {
-    changeClasses();
-  });
-};
+  let tableMarvinButton = document.createElement("li");
+  tableMarvinButton.classList.add("bqX");
+  tableMarvinButton.style.cssText = `background: url(${logo}) no-repeat center center; background-size: 20px; width: 20px; height: 20px; margin-right: 10px; margin-left: 10px; border-radius: 50%`;
+  tableMarvinButton.setAttribute("data-tooltip", "Add to Marvin");
+  tableMarvinButton.onclick = () => {
+    let emailSubject =
+      emailElement.childNodes[5].childNodes[0].childNodes[0].childNodes[0]
+        .childNodes[0].childNodes[0].innerText;
+    let emailLink =
+      emailElement.childNodes[5].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].getAttribute(
+        "data-legacy-last-message-id"
+      );
 
-// Marvin buttons for Single Email view
+    let message = chrome.runtime.sendMessage({
+      message: "sendTaskFromTable",
+      emailSubject: emailSubject.trim(),
+      emailLink,
+    });
 
-let singleEmail;
-const generateTitle = (titleElement) => {
-  let title = [];
-  titleElement.forEach((el) => {
-    if (el.textContent !== "") title.push(el.textContent.trim());
-  });
-  return title.join(" ");
-};
+    message.then(() => {
+      changeClasses();
+    });
+  };
 
-let marvinButtonContainer = document.createElement("div");
-marvinButtonContainer.classList.add(
-  "T-I",
-  "J-J5-Ji",
-  "T-I-Js-Gs",
-  "T-I-ax7",
-  "T-I-Js-IF"
-);
-marvinButtonContainer.innerHTML = '<div class="asa"></div>';
-marvinButtonContainer.setAttribute("data-tooltip", "Add to Marvin");
-marvinButtonContainer.setAttribute("role", "button");
-marvinButtonContainer.setAttribute("tabIndex", "0");
-marvinButtonContainer.setAttribute("aria-haspopup", "false");
-marvinButtonContainer.setAttribute("aria-expanded", "false");
-marvinButtonContainer.setAttribute("aria-label", "Add to Marvin");
+  // Marvin buttons for Single Email view
 
-marvinButtonContainer.onmouseenter = () => {
-  marvinButtonContainer.classList.add("T-I-JW");
-};
-marvinButtonContainer.onmouseleave = () => {
-  marvinButtonContainer.classList.remove("T-I-JW");
-};
-marvinButtonContainer.onclick = () => {
-  let titleElement =
-    singleEmail.childNodes[1].childNodes[0].childNodes[0].childNodes;
-  let emailSubject = generateTitle(titleElement);
-  let emailLink =
-    singleEmail.childNodes[1].childNodes[0].childNodes[0].getAttribute(
-      "data-legacy-thread-id"
-    );
+  let singleEmail;
+  const generateTitle = (titleElement) => {
+    let title = [];
+    titleElement.forEach((el) => {
+      if (el.textContent !== "") title.push(el.textContent.trim());
+    });
+    return title.join(" ");
+  };
 
-  let message = chrome.runtime.sendMessage({
-    message: "sendTaskFromSingleView",
-    emailSubject,
-    emailLink,
-  });
+  let marvinButtonContainer = document.createElement("div");
+  marvinButtonContainer.classList.add(
+    "T-I",
+    "J-J5-Ji",
+    "T-I-Js-Gs",
+    "T-I-ax7",
+    "T-I-Js-IF"
+  );
+  marvinButtonContainer.innerHTML = '<div class="asa"></div>';
+  marvinButtonContainer.setAttribute("data-tooltip", "Add to Marvin");
+  marvinButtonContainer.setAttribute("role", "button");
+  marvinButtonContainer.setAttribute("tabIndex", "0");
+  marvinButtonContainer.setAttribute("aria-haspopup", "false");
+  marvinButtonContainer.setAttribute("aria-expanded", "false");
+  marvinButtonContainer.setAttribute("aria-label", "Add to Marvin");
 
-  message.then(() => {
-    changeClasses();
-  });
-};
+  marvinButtonContainer.onmouseenter = () => {
+    marvinButtonContainer.classList.add("T-I-JW");
+  };
+  marvinButtonContainer.onmouseleave = () => {
+    marvinButtonContainer.classList.remove("T-I-JW");
+  };
+  marvinButtonContainer.onclick = () => {
+    let titleElement =
+      singleEmail.childNodes[1].childNodes[0].childNodes[0].childNodes;
+    let emailSubject = generateTitle(titleElement);
+    let emailLink =
+      singleEmail.childNodes[1].childNodes[0].childNodes[0].getAttribute(
+        "data-legacy-thread-id"
+      );
 
-let singleMarvinButton = document.createElement("div");
-singleMarvinButton.style.cssText = `background: url(${logo}) no-repeat center center; background-size: 20px; width: 20px; height: 20px; border-radius: 50%`;
-singleMarvinButton.classList.add("ase", "T-I-J3", "J-J5-Ji");
+    let message = chrome.runtime.sendMessage({
+      message: "sendTaskFromSingleView",
+      emailSubject,
+      emailLink,
+    });
 
-// Success Message
+    message.then(() => {
+      changeClasses();
+    });
+  };
 
-let marvinSuccessMessage = document.createElement("div");
-marvinSuccessMessage.textContent = "Task successfully added to Marvin!";
-document.body.appendChild(marvinSuccessMessage);
+  let singleMarvinButton = document.createElement("div");
+  singleMarvinButton.style.cssText = `background: url(${logo}) no-repeat center center; background-size: 20px; width: 20px; height: 20px; border-radius: 50%`;
+  singleMarvinButton.classList.add("ase", "T-I-J3", "J-J5-Ji");
 
-let marvinSuccessMessageStyles = document.createElement("style");
-marvinSuccessMessageStyles.innerHTML = `
+  // Success Message
+
+  let marvinSuccessMessage = document.createElement("div");
+  marvinSuccessMessage.textContent = "Task successfully added to Marvin!";
+  document.body.appendChild(marvinSuccessMessage);
+
+  let marvinSuccessMessageStyles = document.createElement("style");
+  marvinSuccessMessageStyles.innerHTML = `
     .marvinSuccessMessageVisible {
         display: grid;
         place-items: center;
@@ -128,45 +134,46 @@ marvinSuccessMessageStyles.innerHTML = `
         text-align: center;
         padding: 10px;
     }`;
-document
-  .getElementsByTagName("head")[0]
-  .appendChild(marvinSuccessMessageStyles);
+  document
+    .getElementsByTagName("head")[0]
+    .appendChild(marvinSuccessMessageStyles);
 
-marvinSuccessMessage.classList.add(
-  "marvinSuccessMessage",
-  "marvinSuccessMessageHidden"
-);
+  marvinSuccessMessage.classList.add(
+    "marvinSuccessMessage",
+    "marvinSuccessMessageHidden"
+  );
 
-setInterval(() => {
-  tables = document.querySelectorAll("table.F.cf.zt");
-  if (tables) {
-    tables.forEach((table) => {
-      // check if we already added a listener to the table
-      if (table.getAttribute("listener") !== "true") {
-        table.addEventListener("mousemove", (e) => {
-          if (
-            e.target.nodeName === "TR" &&
-            e.target.classList.contains("aqw")
-          ) {
-            emailElement = e.target;
-            let buttons = e.target.childNodes[9].childNodes[0];
-            let lastChild = buttons.lastChild;
-            buttons.insertBefore(tableMarvinButton, lastChild);
-          }
-        });
+  setInterval(() => {
+    tables = document.querySelectorAll("table.F.cf.zt");
+    if (tables && isDisplayedInInbox) {
+      tables.forEach((table) => {
+        // check if we already added a listener to the table
+        if (table.getAttribute("listener") !== "true") {
+          table.addEventListener("mousemove", (e) => {
+            if (
+              e.target.nodeName === "TR" &&
+              e.target.classList.contains("aqw")
+            ) {
+              emailElement = e.target;
+              let buttons = e.target.childNodes[9].childNodes[0];
+              let lastChild = buttons.lastChild;
+              buttons.insertBefore(tableMarvinButton, lastChild);
+            }
+          });
 
-        table.setAttribute("listener", "true");
-      }
-    });
-  }
+          table.setAttribute("listener", "true");
+        }
+      });
+    }
 
-  singleEmail = document.querySelector(".nH.V8djrc.byY");
-  if (singleEmail) {
-    let singleEmailButtons = document.querySelector(".iH.bzn");
-    let singleEmailButtonsElement =
-      singleEmailButtons.childNodes[0].childNodes[3];
+    singleEmail = document.querySelector(".nH.V8djrc.byY");
+    if (singleEmail && isDisplayedInSingleEmail) {
+      let singleEmailButtons = document.querySelector(".iH.bzn");
+      let singleEmailButtonsElement =
+        singleEmailButtons.childNodes[0].childNodes[3];
 
-    marvinButtonContainer.childNodes[0].appendChild(singleMarvinButton);
-    singleEmailButtonsElement.appendChild(marvinButtonContainer);
-  }
-}, 2000);
+      marvinButtonContainer.childNodes[0].appendChild(singleMarvinButton);
+      singleEmailButtonsElement.appendChild(marvinButtonContainer);
+    }
+  }, 2000);
+});

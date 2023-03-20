@@ -1,6 +1,7 @@
 import OptionsContentInteractions from "./OptionsContentInteractions";
 import OptionsContentApi from "./OptionsContentApi";
 import OptionsContentSync from "./OptionsContentSync";
+import OptionsContentGmail from "./OptionsContentGmail";
 
 const OptionsContent = ({ selectedSetting }) => {
   switch (selectedSetting) {
@@ -10,6 +11,8 @@ const OptionsContent = ({ selectedSetting }) => {
       return <OptionsContentApi />;
     case "sync":
       return <OptionsContentSync />;
+    case "gmail":
+      return <OptionsContentGmail />;
     default:
       return <OptionsContentInteractions />;
   }

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { verifyToken, getLabels, getCategories } from "../utils/api";
-import { setStoredToken } from "../utils/storage";
+import { verifyToken, getLabels, getCategories } from "../../utils/api";
+import { setStoredToken } from "../../utils/storage";
 
 const OnboardingPage = ({ setApiToken, setOnboarded }) => {
   const [token, setToken] = useState("");

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-import { getStoredCategories } from "../utils/storage";
-import MarvinButton from "./MarvinButton";
+import { getStoredCategories } from "../../utils/storage";
+
+import MarvinButton from "../../components/MarvinButton";
 
 const AddTaskParentPicker = ({ parent, setParent, setParentPickerVisible }) => {
   const [searchQuery, setSearchQuery] = useState(

@@ -1,7 +1,7 @@
-import MarvinLabel from "./MarvinLabel";
-import AddTaskLabelsDropdown from "./AddTaskLabelsDropdown";
 import { useEffect, useState } from "react";
-import { getStoredLabels } from "../utils/storage";
+import { getStoredLabels } from "../../utils/storage";
+import MarvinLabel from "../../components/MarvinLabel";
+import AddTaskLabelsDropdown from "./AddTaskLabelsDropdown";
 
 const AddTaskLabels = ({ labels, setLabels }) => {
   const [allLabels, setAllLabels] = useState([]);

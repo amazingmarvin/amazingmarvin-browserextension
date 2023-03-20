@@ -1,9 +1,13 @@
-import { getCategories, getLabels } from "../utils/api";
-import { getLastSyncedCategories, getLastSyncedLabels } from "../utils/storage";
-
 import { useEffect, useState } from "react";
-import MarvinButton from "./MarvinButton";
-import LoadingSpinner from "./LoadingSpinner";
+
+import { getCategories, getLabels } from "../../utils/api";
+import {
+  getLastSyncedCategories,
+  getLastSyncedLabels,
+} from "../../utils/storage";
+
+import MarvinButton from "../../components/MarvinButton";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const OptionsContentSync = () => {
   const [lastSyncedCategories, setLastSyncedCategories] = useState("");

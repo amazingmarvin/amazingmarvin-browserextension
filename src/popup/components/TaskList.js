@@ -1,9 +1,11 @@
-import { getTasks } from "../utils/api";
+import { useEffect, useState } from "react";
+
+import { getTasks } from "../../utils/api";
+import { setBadge } from "../../utils/badge";
+
 import Task from "./Task";
 import TaskListHeader from "./TaskListHeader";
-import { useEffect, useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import { setBadge } from "../utils/badge";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const TaskList = ({ apiToken }) => {
   const [tasks, setTasks] = useState([]);

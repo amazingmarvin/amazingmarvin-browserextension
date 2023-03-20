@@ -1,7 +1,9 @@
-import { getStoredToken, setStoredToken } from "../utils/storage";
 import { useEffect, useState } from "react";
-import { verifyToken } from "../utils/api";
-import MarvinButton from "./MarvinButton";
+
+import { getStoredToken, setStoredToken } from "../../utils/storage";
+import { verifyToken } from "../../utils/api";
+
+import MarvinButton from "../../components/MarvinButton";
 
 const OptionsContentApi = () => {
   const [apiToken, setApiToken] = useState("");

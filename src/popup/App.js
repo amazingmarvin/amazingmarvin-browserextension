@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import TaskList from "../components/TaskList";
-import BottomMenu from "../components/BottomMenu";
-import OnboardingPage from "../components/OnboardingPage";
-import AddTask from "../components/AddTask";
+
 import { getStoredToken } from "../utils/storage";
+
+import OnboardingPage from "./components/OnboardingPage";
+import BottomMenu from "./components/BottomMenu";
+import TaskList from "./components/TaskList";
+import AddTask from "./components/AddTask";
 
 const App = () => {
   const [activeTab, setActiveTab] = useState("add-task");

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import { markDone } from "../utils/api";
+import { markDone } from "../../utils/api";
+
 import { HiFlag } from "react-icons/hi2";
+
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Task = ({ task, apiToken, updateTasks }) => {
   const [checked, setChecked] = useState(false);

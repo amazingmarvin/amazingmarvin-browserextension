@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+
 import {
   getStoredGmailSettings,
   setStoredGmailSettings,
-} from "../utils/storage";
+} from "../../utils/storage";
 
 const OptionsContentGmail = () => {
   let singleEmailImage = chrome.runtime.getURL("static/singleemail.png");

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { formatDate, isValidDate } from "../utils/dates";
-import { addTask } from "../utils/api";
+import { formatDate, isValidDate } from "../../utils/dates";
+import { addTask } from "../../utils/api";
 
 import { BsSun, BsMoon, BsCalendarPlus, BsCalendarX } from "react-icons/bs";
 
@@ -12,11 +12,11 @@ import AddTaskNote from "./AddTaskNote";
 import AddTaskParent from "./AddTaskParent";
 import AddTaskParentPicker from "./AddTaskParentPicker";
 import AddTaskLabels from "./AddTaskLabels";
-import MarvinButton from "./MarvinButton";
-import LoadingSpinner from "./LoadingSpinner";
+import MarvinButton from "../../components/MarvinButton";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 import "react-day-picker/dist/style.css";
-import "../styles/day-picker.css";
+import "../../styles/day-picker.css";
 
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");

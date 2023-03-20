@@ -1,12 +1,12 @@
-import OptionsContentInteractions from "./OptionsContentInteractions";
+import OptionsContentGeneral from "./OptionsContentGeneral";
 import OptionsContentApi from "./OptionsContentApi";
 import OptionsContentSync from "./OptionsContentSync";
 import OptionsContentGmail from "./OptionsContentGmail";
 
 const OptionsContent = ({ selectedSetting }) => {
   switch (selectedSetting) {
-    case "interactions":
-      return <OptionsContentInteractions />;
+    case "general":
+      return <OptionsContentGeneral />;
     case "api":
       return <OptionsContentApi />;
     case "sync":
@@ -14,7 +14,7 @@ const OptionsContent = ({ selectedSetting }) => {
     case "gmail":
       return <OptionsContentGmail />;
     default:
-      return <OptionsContentInteractions />;
+      return <OptionsContentGeneral />;
   }
 };
 

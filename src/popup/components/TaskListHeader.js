@@ -1,5 +1,6 @@
+import { displayDate, changeDay } from "../../utils/dates";
+
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-import { displayDate, changeDay } from "../utils/dates";
 
 const TaskListHeader = ({ day, setDay, setIsLoading }) => {
   const handleClick = (direction) => {

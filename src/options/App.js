@@ -1,14 +1,16 @@
 import { useState } from "react";
-import OptionsSidebar from "../components/OptionsSidebar";
-import OptionsContent from "../components/OptionsContent";
+
+import OptionsSidebar from "./components/OptionsSidebar";
+import OptionsContent from "./components/OptionsContent";
 
 const App = () => {
-  const [selectedSetting, setSelectedSetting] = useState("api");
+  const [selectedSetting, setSelectedSetting] = useState("general");
 
   const settings = [
-    { name: "interactions", text: "Interactions" },
+    { name: "general", text: "General" },
     { name: "api", text: "API Token" },
     { name: "sync", text: "Sync" },
+    { name: "gmail", text: "Gmail Addon" },
   ];
 
   return (

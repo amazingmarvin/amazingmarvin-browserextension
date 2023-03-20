@@ -1,14 +1,93 @@
 import { addTask } from "../utils/api";
 import {
+  getStoredLabels,
   setStoredLabels,
   setStoredCategories,
   getStoredToken,
+  setStoredGmailSettings,
+  getStoredCategories,
+  getStoredGmailSettings,
 } from "../utils/storage";
 import { getLabels, getCategories } from "../utils/api";
+import { formatDate } from "../utils/dates";
+
+console.log("background.js running");
+
+const getTabTitleAsHyperlink = () => {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+      let tab = tabs[0];
+      resolve(`[${tab.title}](${tab.url})`);
+    });
+  });
+};
 
 chrome.runtime.onInstalled.addListener(() => {
-  setStoredLabels([]);
-  setStoredCategories([]);
+  getStoredLabels().then((labels) => {
+    if (!labels) {
+      setStoredLabels([]);
+    }
+  });
+  getStoredCategories().then((categories) => {
+    if (!categories) {
+      setStoredCategories([]);
+    }
+  });
+  getStoredGmailSettings().then((gmailSettings) => {
+    if (!gmailSettings) {
+      setStoredGmailSettings({
+        scheduleForToday: true,
+        displayInInbox: true,
+        displayInSingleEmail: true,
+      });
+    }
+  });
+
+  chrome.contextMenus.create({
+    id: "addTask",
+    title: "Add task to Marvin",
+    contexts: ["selection"],
+  });
+  chrome.contextMenus.create({
+    id: "addTaskToday",
+    title: "Add task for today",
+    contexts: ["selection"],
+    parentId: "addTask",
+  });
+  chrome.contextMenus.create({
+    id: "addTaskUnscheduled",
+    title: "Add unscheduled task",
+    contexts: ["selection"],
+    parentId: "addTask",
+  });
+
+  chrome.contextMenus.onClicked.addListener((event) => {
+    getTabTitleAsHyperlink().then((title) => {
+      console.log(title);
+      if (event.menuItemId === "addTaskToday") {
+        let data = {
+          done: false,
+          day: formatDate(new Date()),
+          title: title,
+          note: `${event.selectionText}`,
+        };
+
+        console.log(data);
+
+        addTask(data);
+      }
+
+      if (event.menuItemId === "addTaskUnscheduled") {
+        let data = {
+          done: false,
+          title: title,
+          note: `${event.selectionText}`,
+        };
+
+        addTask(data);
+      }
+    });
+  });
 
   chrome.alarms.create({
     periodInMinutes: 30,
@@ -16,8 +95,6 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
-  console.log("in alarm");
-
   let token = await getStoredToken().then((token) => token);
   if (!token) {
     return;
@@ -29,12 +106,20 @@ chrome.alarms.onAlarm.addListener(async () => {
   }, 1000);
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  sender,
+  sendResponse
+) {
   let data = {
     done: false,
   };
 
-  // Ovde ucitati opcije iz storage-a
+  let scheduleForToday = await getStoredGmailSettings().then(
+    (gmailSettings) => gmailSettings.scheduleForToday
+  );
+
+  if (scheduleForToday) data.day = formatDate(new Date());
 
   const getTabUrl = () => {
     return new Promise((resolve, reject) => {

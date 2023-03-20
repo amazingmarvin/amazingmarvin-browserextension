@@ -28,13 +28,14 @@
     "type": "module"
   },
   "web_accessible_resources": [{
-    "resources": ["./static/logo.png"],
+    "resources": ["./static/logo.png", "./static/inboxlist.png", "./static/singleemail.png"],
     "matches": ["<all_urls>"]
   }],
   "host_permissions": ["https://serv.amazingmarvin.com/api/*"],
   "permissions": [
     "storage",
     "tabs",
-    "alarms"
+    "alarms",
+    "contextMenus"
   ]
 }

@@ -85,7 +85,7 @@ const OptionsContentGeneral = () => {
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
               When this setting is disabled, the due date picker will be hidden
-              and tasks will be added without due date.
+              and tasks will be added without a due date.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
               <input
@@ -109,7 +109,7 @@ const OptionsContentGeneral = () => {
           <h3 className="font-bold mb-3">Display Time Estimate buttons</h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              With this setting disabled, the time estimate buttons will be
+              When this setting is disabled, the time estimate buttons will be
               hidden and tasks will be added without a time estimate.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
@@ -134,8 +134,8 @@ const OptionsContentGeneral = () => {
           <h3 className="font-bold mb-3">Display Set Parent picker</h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              With this setting disabled, the set parent picker will be hidden
-              and tasks will be added to Inbox.
+              When this setting is disabled, the set parent picker will be
+              hidden and tasks will be added to Inbox.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
               <input
@@ -159,8 +159,8 @@ const OptionsContentGeneral = () => {
           <h3 className="font-bold mb-3">Display Set Labels picker</h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              With this setting disabled, the set labels picker will be hidden
-              and tasks will be added without any labels.
+              WWhen this setting is disabled, the set labels picker will be
+              hidden and tasks will be added without any labels.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
               <input

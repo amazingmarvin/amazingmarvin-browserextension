@@ -55,7 +55,7 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
   return (
     <div className="card w-full text-info-content">
       <div className="card-body items-center text-center">
-        <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">
+        <h1 className="mb-4 text-3xl font-extrabold text-gray-900">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#26d6c4] to-[#10b1d3]">
             Hello!
           </span>

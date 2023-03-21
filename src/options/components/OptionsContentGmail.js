@@ -55,8 +55,8 @@ const OptionsContentGmail = () => {
           <h3 className="font-bold mb-3">Automatically schedule for Today</h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              With this setting enabled, emails sent to Marvin as tasks will
-              also get scheduled for today.
+              When this setting is enabled, emails sent to Marvin as tasks will
+              automatically get scheduled for today.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
               <input
@@ -75,8 +75,8 @@ const OptionsContentGmail = () => {
           <h3 className="font-bold mb-3">Display Marvin button in Inbox</h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              Display the Marvin button when hovering over emails in Inbox and
-              other lists (e.g. Starred, Important, etc.).
+              Display "Add to Marvin" button when hovering over emails in Inbox
+              and other lists (e.g. Starred, Important, etc.).
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
               <input
@@ -102,7 +102,8 @@ const OptionsContentGmail = () => {
           </h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              Display the Marvin button at the top when viewing a single email.
+              Display "Add to Marvin" button at the top when viewing a single
+              email.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">
               <input

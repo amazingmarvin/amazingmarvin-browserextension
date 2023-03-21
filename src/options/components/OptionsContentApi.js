@@ -36,19 +36,31 @@ const OptionsContentApi = () => {
   };
 
   const handleSave = async () => {
-    let tokenResult = await verifyToken(apiToken);
+    if (!apiToken) {
+      setWrongToken(true);
+      setTimeout(() => {
+        setWrongToken(false);
+      }, 3000);
+      return;
+    }
+
+    let justTokenPart = apiToken.split(" ").at(-1);
+    let tokenResult = await verifyToken(justTokenPart);
 
     if (!tokenResult) {
       setWrongToken(true);
+      setTimeout(() => {
+        setWrongToken(false);
+      }, 3000);
     }
 
     if (tokenResult) {
       setWrongToken(false);
       saveTokenToStorageAndState(tokenResult);
       setSuccessToken(true);
-      setInterval(() => {
+      setTimeout(() => {
         setSuccessToken(false);
-      }, 1500);
+      }, 2000);
     }
   };
 
@@ -75,7 +87,7 @@ const OptionsContentApi = () => {
           </p>
         )}
         {successToken && (
-          <p className="text-green-500 mt-3">Token saved successfully</p>
+          <p className="text-green-500 mt-3">Token successfully saved.</p>
         )}
         <div className="flex flex-row justify-around w-full mt-3 mb-3">
           <input

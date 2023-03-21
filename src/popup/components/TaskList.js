@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { getTasks } from "../../utils/api";
+import { formatDate } from "../../utils/dates";
 import { setBadge } from "../../utils/badge";
 
 import Task from "./Task";
@@ -16,7 +17,8 @@ const TaskList = ({ apiToken }) => {
     getTasks(apiToken, day).then((tasks) => {
       setTasks(tasks);
       setIsLoading(false);
-      setBadge(tasks.length);
+
+      if (formatDate(day) === formatDate(new Date())) setBadge(tasks.length);
     });
   }, [day]);
 

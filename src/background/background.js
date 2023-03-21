@@ -1,12 +1,14 @@
 import { addTask } from "../utils/api";
 import {
+  getStoredToken,
   getStoredLabels,
   setStoredLabels,
   setStoredCategories,
-  getStoredToken,
-  setStoredGmailSettings,
   getStoredCategories,
+  setStoredGmailSettings,
   getStoredGmailSettings,
+  getStoredGeneralSettings,
+  setStoredGeneralSettings,
 } from "../utils/storage";
 import { getLabels, getCategories } from "../utils/api";
 import { formatDate } from "../utils/dates";
@@ -39,6 +41,18 @@ chrome.runtime.onInstalled.addListener(() => {
         scheduleForToday: true,
         displayInInbox: true,
         displayInSingleEmail: true,
+      });
+    }
+  });
+  getStoredGeneralSettings().then((generalSettings) => {
+    if (!generalSettings) {
+      setStoredGeneralSettings({
+        displayTaskNoteInput: true,
+        displayScheduleDatePicker: true,
+        displayDueDatePicker: true,
+        displayTimeEstimateButtons: true,
+        displaySetParentPicker: true,
+        displaySetLabelsPicker: true,
       });
     }
   });

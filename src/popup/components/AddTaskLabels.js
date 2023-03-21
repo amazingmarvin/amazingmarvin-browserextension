@@ -68,8 +68,6 @@ const AddTaskLabels = ({ labels, setLabels }) => {
       <div className="flex flex-wrap gap-y-2">
         {labels.length > 0 &&
           labels.map((label) => {
-            console.log("label", label, "is selected", label.selected);
-
             if (!label.selected) {
               return;
             }

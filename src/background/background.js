@@ -1,4 +1,4 @@
-import { addTask } from "../utils/api";
+import { addTask, getTasks } from "../utils/api";
 import {
   getStoredToken,
   getStoredLabels,
@@ -12,6 +12,7 @@ import {
 } from "../utils/storage";
 import { getLabels, getCategories } from "../utils/api";
 import { formatDate } from "../utils/dates";
+import { setBadge } from "../utils/badge";
 
 console.log("background.js running");
 
@@ -38,7 +39,7 @@ chrome.runtime.onInstalled.addListener(() => {
   getStoredGmailSettings().then((gmailSettings) => {
     if (!gmailSettings) {
       setStoredGmailSettings({
-        scheduleForToday: true,
+        scheduleForToday: false,
         displayInInbox: true,
         displayInSingleEmail: true,
       });
@@ -86,8 +87,6 @@ chrome.runtime.onInstalled.addListener(() => {
           note: `${event.selectionText}`,
         };
 
-        console.log(data);
-
         addTask(data);
       }
 
@@ -106,11 +105,21 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.alarms.create({
     periodInMinutes: 30,
   });
+
+  chrome.alarms.create("updateBadge", { periodInMinutes: 5 });
 });
 
-chrome.alarms.onAlarm.addListener(async () => {
+chrome.alarms.onAlarm.addListener(async (alarm) => {
   let token = await getStoredToken().then((token) => token);
   if (!token) {
+    return;
+  }
+
+  if (alarm.name === "updateBadge") {
+    getTasks(token, new Date()).then((tasks) => {
+      setBadge(tasks.length);
+    });
+
     return;
   }
 

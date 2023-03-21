@@ -22,22 +22,24 @@ const Task = ({ task, apiToken, updateTasks }) => {
       {isLoading ? (
         <LoadingSpinner height="h-5" width="w-5" />
       ) : task.db === "Tasks" ? (
-        <input
-          type="checkbox"
-          checked={checked}
-          className="w-6 h-6 big"
-          onChange={handleChange}
-          onMouseEnter={() => {
-            setChecked(true);
-          }}
-          onMouseLeave={() => {
-            setChecked(false);
-          }}
-        />
+        <div>
+          <input
+            type="checkbox"
+            checked={checked}
+            className="w-6 h-6 big basis-6"
+            onChange={handleChange}
+            onMouseEnter={() => {
+              setChecked(true);
+            }}
+            onMouseLeave={() => {
+              setChecked(false);
+            }}
+          />
+        </div>
       ) : (
         <HiFlag size={20} className="text-primary" />
       )}
-      <label>{task.title}</label>
+      <label className="overflow-auto scrollbar-hide">{task.title}</label>
     </li>
   );
 };

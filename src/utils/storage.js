@@ -93,3 +93,19 @@ export function setStoredGmailSettings(settings) {
     });
   });
 }
+
+export function getStoredGeneralSettings() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["generalSettings"]).then((result) => {
+      resolve(result.generalSettings);
+    });
+  });
+}
+
+export function setStoredGeneralSettings(settings) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ generalSettings: settings }).then(() => {
+      resolve();
+    });
+  });
+}

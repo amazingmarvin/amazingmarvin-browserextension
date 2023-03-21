@@ -1,4 +1,4 @@
-const LoadingSpinner = ( {width='w-8',height = 'h-8'}) => {
+const LoadingSpinner = ({ width = "w-8", height = "h-8" }) => {
   return (
     <div role="status">
       <svg
@@ -19,7 +19,7 @@ const LoadingSpinner = ( {width='w-8',height = 'h-8'}) => {
       </svg>
       <span className="sr-only">Loading...</span>
     </div>
-  )
-}
+  );
+};
 
-export default LoadingSpinner
+export default LoadingSpinner;

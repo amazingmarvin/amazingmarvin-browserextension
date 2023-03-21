@@ -19,19 +19,34 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://mail.google.com/*"],
-      "js": ["./content_scripts/gmail.js"]
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "./content_scripts/gmail.js"
+      ]
     }
   ],
   "background": {
     "service_worker": "./background/background.js",
     "type": "module"
   },
-  "web_accessible_resources": [{
-    "resources": ["./static/logo.png", "./static/inboxlist.png", "./static/singleemail.png"],
-    "matches": ["<all_urls>"]
-  }],
-  "host_permissions": ["https://serv.amazingmarvin.com/api/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "./static/logo.png",
+        "./static/inboxlist.png",
+        "./static/singleemail.png",
+        "./static/marvinhello.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://serv.amazingmarvin.com/api/*"
+  ],
   "permissions": [
     "storage",
     "tabs",

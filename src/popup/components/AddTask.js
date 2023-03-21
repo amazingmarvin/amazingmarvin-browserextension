@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { formatDate, isValidDate } from "../../utils/dates";
+import { getStoredGeneralSettings } from "../../utils/storage";
 import { addTask } from "../../utils/api";
 
 import { BsSun, BsMoon, BsCalendarPlus, BsCalendarX } from "react-icons/bs";
@@ -17,7 +18,6 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 
 import "react-day-picker/dist/style.css";
 import "../../styles/day-picker.css";
-import { getStoredGeneralSettings } from "../../utils/storage";
 
 const AddTask = () => {
   const [displaySettings, setDisplaySettings] = useState({});

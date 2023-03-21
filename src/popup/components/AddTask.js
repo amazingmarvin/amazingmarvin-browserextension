@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { formatDate, isValidDate } from "../../utils/dates";
 import { addTask } from "../../utils/api";
 
@@ -17,8 +17,11 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 
 import "react-day-picker/dist/style.css";
 import "../../styles/day-picker.css";
+import { getStoredGeneralSettings } from "../../utils/storage";
 
 const AddTask = () => {
+  const [displaySettings, setDisplaySettings] = useState({});
+
   const [taskTitle, setTaskTitle] = useState("");
   const [note, setNote] = useState("");
   const [scheduleDate, setScheduleDate] = useState("unassigned");
@@ -35,8 +38,15 @@ const AddTask = () => {
   const [parent, setParent] = useState({ title: "Inbox", _id: "" });
   const [parentPickerVisible, setParentPickerVisible] = useState(false);
   const [labels, setLabels] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    getStoredGeneralSettings().then((settings) => {
+      setDisplaySettings(settings);
+    });
+  }, []);
 
   const resetForm = () => {
     setTaskTitle("");
@@ -285,35 +295,47 @@ const AddTask = () => {
         <div className="form-control w-full pt-2 px-5">
           <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
-          <AddTaskNote note={note} setNote={setNote} />
+          {displaySettings?.displayTaskNoteInput && (
+            <AddTaskNote note={note} setNote={setNote} />
+          )}
 
           <div className="flex flex-row justify-between">
-            <AddTaskDate
-              type="Schedule date"
-              date={scheduleDate}
-              buttons={scheduleDateButtons}
-            />
+            {displaySettings?.displayScheduleDatePicker && (
+              <AddTaskDate
+                type="Schedule date"
+                date={scheduleDate}
+                buttons={scheduleDateButtons}
+              />
+            )}
 
-            <AddTaskDate
-              type="Due date"
-              date={dueDate}
-              buttons={dueDateButtons}
-            />
+            {displaySettings.displayDueDatePicker && (
+              <AddTaskDate
+                type="Due date"
+                date={dueDate}
+                buttons={dueDateButtons}
+              />
+            )}
           </div>
 
-          <AddTaskDuration
-            timeEstimate={timeEstimate}
-            setTimeEstimate={setTimeEstimate}
-            timeEstimateButtons={timeEstimateButtons}
-          />
+          {displaySettings?.displayTimeEstimateButtons && (
+            <AddTaskDuration
+              timeEstimate={timeEstimate}
+              setTimeEstimate={setTimeEstimate}
+              timeEstimateButtons={timeEstimateButtons}
+            />
+          )}
 
-          <AddTaskParent
-            parent={parent}
-            setParent={setParent}
-            setParentPickerVisible={setParentPickerVisible}
-          />
+          {displaySettings?.displaySetParentPicker && (
+            <AddTaskParent
+              parent={parent}
+              setParent={setParent}
+              setParentPickerVisible={setParentPickerVisible}
+            />
+          )}
 
-          <AddTaskLabels labels={labels} setLabels={setLabels} />
+          {displaySettings?.displaySetLabelsPicker && (
+            <AddTaskLabels labels={labels} setLabels={setLabels} />
+          )}
         </div>
 
         <div className="flex flex-wrap justify-center py-4 px-2">

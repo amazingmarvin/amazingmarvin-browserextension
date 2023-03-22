@@ -76,38 +76,39 @@ chrome.runtime.onInstalled.addListener(() => {
     parentId: "addTask",
   });
 
-  chrome.contextMenus.onClicked.addListener((event) => {
-    getTabTitleAsHyperlink().then((title) => {
-      if (event.menuItemId === "addTaskToday") {
-        let data = {
-          done: false,
-          day: formatDate(new Date()),
-          title: title,
-          note: `${event.selectionText}`,
-        };
-
-        console.log("scheduled", data);
-        addTask(data);
-      }
-
-      if (event.menuItemId === "addTaskUnscheduled") {
-        let data = {
-          done: false,
-          title: title,
-          note: `${event.selectionText}`,
-        };
-
-        console.log("unscheduled", data);
-        addTask(data);
-      }
-    });
-  });
-
   chrome.alarms.create({
     periodInMinutes: 30,
   });
 
   chrome.alarms.create("updateBadge", { periodInMinutes: 5 });
+});
+
+chrome.contextMenus.onClicked.addListener((event) => {
+  console.log("adding a task from context menu");
+  getTabTitleAsHyperlink().then((title) => {
+    if (event.menuItemId === "addTaskToday") {
+      let data = {
+        done: false,
+        day: formatDate(new Date()),
+        title: title,
+        note: `${event.selectionText}`,
+      };
+
+      console.log("scheduled", data);
+      addTask(data);
+    }
+
+    if (event.menuItemId === "addTaskUnscheduled") {
+      let data = {
+        done: false,
+        title: title,
+        note: `${event.selectionText}`,
+      };
+
+      console.log("unscheduled", data);
+      addTask(data);
+    }
+  });
 });
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {

@@ -25,13 +25,12 @@ getStoredGmailSettings().then((settings) => {
   tableMarvinButton.style.cssText = `background: url(${logo}) no-repeat center center; background-size: 20px; width: 20px; height: 20px; margin-right: 10px; margin-left: 10px; border-radius: 50%`;
   tableMarvinButton.setAttribute("data-tooltip", "Add to Marvin");
   tableMarvinButton.onclick = () => {
-    let emailSubject =
-      emailElement.childNodes[5].childNodes[0].childNodes[0].childNodes[0]
-        .childNodes[0].childNodes[0].innerText;
-    let emailLink =
-      emailElement.childNodes[5].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].getAttribute(
-        "data-legacy-last-message-id"
-      );
+    let emailSubject = emailElement.querySelector(
+      "[data-legacy-thread-id]"
+    ).innerText;
+    let emailLink = emailElement
+      .querySelector("[data-legacy-last-message-id]")
+      .getAttribute("data-legacy-last-message-id");
 
     let message = chrome.runtime.sendMessage({
       message: "sendTaskFromTable",
@@ -81,15 +80,10 @@ getStoredGmailSettings().then((settings) => {
     let titleElement =
       singleEmail.childNodes[1].childNodes[0].childNodes[0].childNodes;
     let emailSubject = generateTitle(titleElement);
-    let emailLink =
-      singleEmail.childNodes[1].childNodes[0].childNodes[0].getAttribute(
-        "data-legacy-thread-id"
-      );
 
     let message = chrome.runtime.sendMessage({
       message: "sendTaskFromSingleView",
       emailSubject,
-      emailLink,
     });
 
     message.then(() => {

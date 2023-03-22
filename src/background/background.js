@@ -78,7 +78,6 @@ chrome.runtime.onInstalled.addListener(() => {
 
   chrome.contextMenus.onClicked.addListener((event) => {
     getTabTitleAsHyperlink().then((title) => {
-      console.log(title);
       if (event.menuItemId === "addTaskToday") {
         let data = {
           done: false,
@@ -87,6 +86,7 @@ chrome.runtime.onInstalled.addListener(() => {
           note: `${event.selectionText}`,
         };
 
+        console.log("scheduled", data);
         addTask(data);
       }
 
@@ -97,6 +97,7 @@ chrome.runtime.onInstalled.addListener(() => {
           note: `${event.selectionText}`,
         };
 
+        console.log("unscheduled", data);
         addTask(data);
       }
     });
@@ -155,7 +156,8 @@ chrome.runtime.onMessage.addListener(async function (
 
   if (request.message === "sendTaskFromTable") {
     getTabUrl().then((url) => {
-      data.title = `[${request.emailSubject}](${url}/${request.emailLink})`;
+      let emailUrl = url.split("#")[0] + "#inbox/" + request.emailLink;
+      data.title = `[${request.emailSubject}](${emailUrl})`;
       addTask(data).then((message) => {
         if (message === "success") {
           Promise.resolve();

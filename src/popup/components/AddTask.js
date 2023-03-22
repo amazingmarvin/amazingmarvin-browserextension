@@ -131,10 +131,10 @@ const AddTask = () => {
       setLoading(false);
 
       if (message === "success") {
-        setMessage("Task successfully created!");
+        setMessage("success");
         resetForm();
       } else {
-        setMessage("Couldn't create task!");
+        setMessage("fail");
       }
 
       setInterval(() => {
@@ -339,9 +339,24 @@ const AddTask = () => {
         </div>
 
         <div className="flex flex-wrap justify-center py-4 px-2">
-          {message && (
-            <div className="text-blue-500 p-0.5 text-base mb-1">{message}</div>
-          )}
+          {message &&
+            (message === "success" ? (
+              <div
+                className="p-4 my-1 text-sm text-green-800 rounded-lg bg-green-50"
+                role="alert"
+              >
+                <span className="font-medium">Success!</span> Task was
+                successfully added to Marvin.
+              </div>
+            ) : (
+              <div
+                className="p-4 my-2 text-sm text-red-800 rounded-lg bg-red-50"
+                role="alert"
+              >
+                <span className="font-medium">Error!</span> Task couldn't get
+                added to Marvin.
+              </div>
+            ))}
           {!loading ? (
             <MarvinButton
               width="w-full"

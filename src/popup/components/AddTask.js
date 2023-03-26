@@ -292,7 +292,7 @@ const AddTask = () => {
 
     return (
       <div className="form-control w-full gap-4 divide-y">
-        <div className="form-control w-full pt-2 px-5">
+        <div id="AddTask" className="form-control w-full pt-2 px-5 overflow-y-auto">
           <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
           {displaySettings?.displayTaskNoteInput && (
@@ -374,7 +374,7 @@ const AddTask = () => {
   };
 
   return (
-    <div className="overflow-y-scroll scrollbar-hide">{displayElements()}</div>
+    <div className="overflow-hidden flex">{displayElements()}</div>
   );
 };
 

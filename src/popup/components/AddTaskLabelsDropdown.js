@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const AddTaskLabelsDropdown = ({ allLabels, labels, checkLabel }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -16,6 +16,17 @@ const AddTaskLabelsDropdown = ({ allLabels, labels, checkLabel }) => {
       )
     );
   }, [labels]);
+
+  const toggleDropdown = useCallback(() => {
+    setIsDropdownOpen((x) => !x);
+  }, [setIsDropdownOpen]);
+
+  // Scroll to bottom after opening dropdown.
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.getElementById("AddTask").scrollTop = 1e4;
+    }
+  }, [isDropdownOpen]);
 
   const filterLabels = (query) => {
     setSearchQuery(query);
@@ -39,7 +50,7 @@ const AddTaskLabelsDropdown = ({ allLabels, labels, checkLabel }) => {
         data-dropdown-toggle="dropdownSearch"
         className={classes}
         type="button"
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        onClick={toggleDropdown}
       >
         Select labels{" "}
         <svg

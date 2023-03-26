@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 
 import { getTasks } from "../../utils/api";
 import { formatDate } from "../../utils/dates";
@@ -12,6 +13,7 @@ const TaskList = ({ apiToken }) => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [day, setDay] = useState(new Date());
+  const [displayDate, setDisplayDate] = useState("today");
 
   useEffect(() => {
     getTasks(apiToken, day).then((tasks) => {
@@ -21,6 +23,23 @@ const TaskList = ({ apiToken }) => {
       if (formatDate(day) === formatDate(new Date())) setBadge(tasks.length);
     });
   }, [day]);
+
+  useEffect(() => {
+    switch (differenceInCalendarDays(day, new Date())) {
+    case -1:
+      setDisplayDate("yesterday");
+      break;
+    case 0:
+      setDisplayDate("today");
+      break;
+    case 1:
+      setDisplayDate("tomorrow");
+      break;
+    default:
+      setDisplayDate(formatDate(day));
+      break;
+    }
+  }, [day, setDisplayDate]);
 
   const updateTasks = (taskId) => {
     const filteredTasks = tasks.filter((task) => task["_id"] !== taskId);
@@ -50,7 +69,7 @@ const TaskList = ({ apiToken }) => {
       ) : (
         <div className="h-64 grid place-content-center p-8">
           <h2 className="text-lg">
-            You don't have any tasks scheduled for this day.
+            You don't have any tasks scheduled for {displayDate}.
           </h2>
         </div>
       )}

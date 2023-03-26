@@ -17,6 +17,14 @@
     scrollbar-width: none; /* Firefox */
 }
 
+.input {
+  height: 2.75rem;
+}
+
+.textarea {
+  min-height: 5.5rem;
+}
+
 /* Used this article to create a custom checkmark
  https://moderncss.dev/pure-css-custom-checkbox-style/
 */

@@ -147,6 +147,8 @@ const AddTask = () => {
     {
       value: "today",
       icon: <BsSun size={20} />,
+      hoverText: "Schedule for today",
+      hoverPos: "L",
       onChange: () => {
         setScheduleDate("today");
       },
@@ -154,6 +156,8 @@ const AddTask = () => {
     {
       value: "tomorrow",
       icon: <BsMoon size={20} />,
+      hoverText: "Schedule for tomorrow",
+      hoverPos: "L",
       onChange: () => {
         setScheduleDate("tomorrow");
       },
@@ -162,6 +166,8 @@ const AddTask = () => {
       isDatePicker: true,
       value: isValidDate(scheduleDate),
       icon: <BsCalendarPlus size={20} />,
+      hoverText: "Choose schedule date...",
+      hoverPos: "L",
       onClick: () => {
         setScheduleDatePicker({
           ...scheduleDatePicker,
@@ -178,6 +184,8 @@ const AddTask = () => {
     {
       value: "unassigned",
       icon: <BsCalendarX size={20} />,
+      hoverText: "Not scheduled",
+      hoverPos: "L",
       onChange: () => {
         setScheduleDate("unassigned");
       },
@@ -187,6 +195,8 @@ const AddTask = () => {
     {
       value: "today",
       icon: <BsSun size={20} />,
+      hoverText: "Due today",
+      hoverPos: "R",
       onChange: () => {
         setDueDate("today");
       },
@@ -194,6 +204,8 @@ const AddTask = () => {
     {
       value: "tomorrow",
       icon: <BsMoon size={20} />,
+      hoverText: "Due tomorrow",
+      hoverPos: "R",
       onChange: () => {
         setDueDate("tomorrow");
       },
@@ -202,6 +214,8 @@ const AddTask = () => {
       isDatePicker: true,
       value: isValidDate(dueDate),
       icon: <BsCalendarPlus size={20} />,
+      hoverText: "Choose due date...",
+      hoverPos: "R",
       onClick: () => {
         setDueDatePicker({
           ...dueDatePicker,
@@ -218,6 +232,8 @@ const AddTask = () => {
     {
       value: "unassigned",
       icon: <BsCalendarX size={20} />,
+      hoverText: "No due date",
+      hoverPos: "R",
       onChange: () => {
         setDueDate("unassigned");
       },

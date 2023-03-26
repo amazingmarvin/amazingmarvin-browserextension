@@ -9,6 +9,8 @@ const AddTaskDate = ({ type, date, buttons }) => {
           value={button.value}
           onClick={button.onClick}
           onChange={button.onChange}
+          data-hov={button.hoverText}
+          data-pos={button.hoverPos}
         >
           {button.icon}
         </RadioButton>
@@ -20,6 +22,8 @@ const AddTaskDate = ({ type, date, buttons }) => {
         key={button.value}
         value={date === button.value}
         onChange={button.onChange}
+        data-hov={button.hoverText}
+        data-pos={button.hoverPos}
       >
         {button.icon}
       </RadioButton>

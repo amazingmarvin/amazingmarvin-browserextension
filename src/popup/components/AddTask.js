@@ -374,13 +374,15 @@ const AddTask = () => {
               </div>
             ))}
           {!loading ? (
-            <MarvinButton
-              width="w-full"
-              disabled={!taskTitle}
-              onClick={handleAddTask}
-            >
-              Create Task
-            </MarvinButton>
+            <div className="relative w-full" data-hov={taskTitle ? null : "The task title is required"} data-pos="T C">
+              <MarvinButton
+                width="w-full"
+                disabled={!taskTitle}
+                onClick={handleAddTask}
+              >
+                Create Task
+              </MarvinButton>
+            </div>
           ) : (
             <LoadingSpinner height="h-5" width="w-5" />
           )}

@@ -106,6 +106,7 @@ const AddTaskParentPicker = ({ parent, setParent, setParentPickerVisible }) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             required
+            autoFocus
           />
         </div>
       </form>

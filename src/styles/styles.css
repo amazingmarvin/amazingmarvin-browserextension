@@ -29,6 +29,7 @@
 ::-webkit-scrollbar-thumb {
   background: #d6d6d6;
   border-radius: 3px;
+}
 
 .input {
   height: 2.75rem;

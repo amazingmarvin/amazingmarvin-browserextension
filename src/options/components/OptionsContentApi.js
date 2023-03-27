@@ -95,7 +95,7 @@ const OptionsContentApi = () => {
             placeholder="Paste your token here"
             value={apiToken}
             onChange={(event) => setApiToken(event.target.value.trim())}
-            className="input input-primary input-bordered w-full max-w-xs"
+            className="input input-primary input-bordered w-full mr-2"
           />
           <MarvinButton onClick={handleSave}>Save</MarvinButton>
         </div>

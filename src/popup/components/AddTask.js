@@ -22,8 +22,8 @@ import "../../styles/day-picker.css";
 const AddTask = () => {
   const [displaySettings, setDisplaySettings] = useState({});
 
-  const [taskTitle, setTaskTitle] = useState("");
-  const [note, setNote] = useState("");
+  const [taskTitle, setTaskTitle] = useState(localStorage.savedTitle || "");
+  const [note, setNote] = useState(localStorage.savedNote || "");
   const [scheduleDate, setScheduleDate] = useState("unassigned");
   const [scheduleDatePicker, setScheduleDatePicker] = useState({
     visible: false,
@@ -47,6 +47,14 @@ const AddTask = () => {
       setDisplaySettings(settings);
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.savedTitle = taskTitle;
+  }, [taskTitle]);
+
+  useEffect(() => {
+    localStorage.savedNote = note;
+  }, [taskTitle]);
 
   const resetForm = () => {
     setTaskTitle("");
@@ -133,6 +141,8 @@ const AddTask = () => {
       if (message === "success") {
         setMessage("success");
         resetForm();
+        delete localStorage.savedTitle;
+        delete localStorage.savedNote;
       } else {
         setMessage("fail");
       }

@@ -110,6 +110,12 @@ const AddTaskLabelsDropdown = ({ allLabels, labels, checkLabel }) => {
             className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownSearchButton"
           >
+            {allLabels.length === 0 && (
+              <div>
+                <p className="text-sm italic">You haven't created any labels yet! Open the <a href="https://app.amazingmarvin.com/?strategySettings=labels" target="_blank">Labels strategy settings in Marvin</a> to add some.</p>
+              </div>
+            )}
+
             {filteredLabels.length > 0 &&
               filteredLabels.map((label) => {
                 return (

@@ -39,6 +39,12 @@
   min-height: 5.5rem;
 }
 
+a {
+  outline: none;
+  text-decoration: none;
+  color: #5dc0bd;
+}
+
 /* Used this article to create a custom checkmark
  https://moderncss.dev/pure-css-custom-checkbox-style/
 */

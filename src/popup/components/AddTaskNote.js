@@ -8,7 +8,7 @@ const AddTaskNote = ({ note, setNote }) => {
         placeholder="Task note..."
         rows={1}
         value={note}
-        className="textarea textarea-bordered textarea-primary w-full"
+        className="textarea textarea-bordered textarea-primary w-full text-base"
         onChange={(event) => {
           setNote(event.target.value);
         }}

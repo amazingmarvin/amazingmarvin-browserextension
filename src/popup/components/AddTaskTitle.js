@@ -11,7 +11,7 @@ const AddTaskTitle = ({ title, setTaskTitle }) => {
           setTaskTitle(event.target.value);
         }}
         placeholder="Enter task title"
-        className="input input-bordered input-primary w-full"
+        className="input input-bordered input-primary w-full text-base"
       />
     </div>
   );

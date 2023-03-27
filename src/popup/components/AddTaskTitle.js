@@ -12,6 +12,7 @@ const AddTaskTitle = ({ title, setTaskTitle }) => {
         }}
         placeholder="Enter task title"
         className="input input-bordered input-primary w-full text-base"
+        autoFocus={!title}
       />
     </div>
   );

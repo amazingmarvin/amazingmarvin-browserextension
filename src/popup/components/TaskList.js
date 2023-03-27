@@ -58,11 +58,11 @@ const TaskList = ({ apiToken }) => {
   });
 
   return (
-    <div className="overflow-scroll scrollbar-hide">
-      <TaskListHeader day={day} setDay={setDay} setIsLoading={setIsLoading} />
+    <div className="overflow-y-scroll scrollbar-today">
+      <TaskListHeader day={day} setDay={setDay} setIsLoading={setIsLoading}/>
       {isLoading ? (
         <div className="h-64 grid place-content-center p-8">
-          <LoadingSpinner />
+          <LoadingSpinner/>
         </div>
       ) : tasks.length ? (
         <ul>{renderedTasks}</ul>

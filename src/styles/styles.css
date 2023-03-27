@@ -26,6 +26,16 @@
   background: transparent;
 }
 
+.scrollbar-today::-webkit-scrollbar-track {
+    margin-top: 55px;
+    background: transparent;
+}
+
+.scrollbar-parent::-webkit-scrollbar-track {
+    margin-top: 65px;
+    background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #d6d6d6;
   border-radius: 3px;

@@ -11,7 +11,7 @@ const TaskListHeader = ({ day, setDay, setIsLoading }) => {
   };
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 sticky top-0 p-0 pl-3">
       <div className="navbar-start">
         <button
           className="btn btn-ghost btn-circle"

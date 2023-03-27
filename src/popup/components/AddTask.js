@@ -317,7 +317,7 @@ const AddTask = () => {
     }
 
     return (
-      <div className="form-control w-full gap-4 divide-y">
+      <div className="form-control justify-between w-full gap-4 divide-y">
         <div id="AddTask" className="form-control w-full pt-2 pl-5 pr-2 overflow-y-scroll">
           <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
@@ -402,7 +402,7 @@ const AddTask = () => {
   };
 
   return (
-    <div className="overflow-hidden flex">{displayElements()}</div>
+    <div className="overflow-auto flex flex-1 scrollbar-parent">{displayElements()}</div>
   );
 };
 

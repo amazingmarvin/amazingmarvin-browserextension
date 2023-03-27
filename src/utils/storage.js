@@ -17,7 +17,7 @@ export function setStoredToken(token) {
 export function getStoredCategories() {
   return new Promise((resolve) => {
     chrome.storage.local.get(["categories"]).then((result) => {
-      resolve(result.categories);
+      resolve([{ _id: "unassigned", title: "Inbox" }, ...(result.categories || [])]);
     });
   });
 }

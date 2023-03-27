@@ -4,17 +4,23 @@ import { getStoredCategories } from "../../utils/storage";
 import MarvinButton from "../../components/MarvinButton";
 
 const AddTaskParentPicker = ({ parent, setParent, setParentPickerVisible }) => {
-  const [searchQuery, setSearchQuery] = useState(
-    parent.title === "Inbox" ? "" : parent.title
-  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getStoredCategories().then((categories) => {
+      setCategories(categories);
+      setAllCategories(categories);
+    });
+  }, []);
 
   // useRef to store the previous value of searchQuery so that we can track
   // when searchQuery is shorter than the previous value
   let searchQueryRef = useRef(searchQuery);
   const filterCategories = (searchQuery, categories) => {
-    if (!searchQuery || !categories) {
-      return [];
+    if (!searchQuery) {
+      return categories;
     }
 
     return categories.filter((category) => {
@@ -23,23 +29,8 @@ const AddTaskParentPicker = ({ parent, setParent, setParentPickerVisible }) => {
   };
 
   useEffect(() => {
-    if (
-      !categories.length ||
-      searchQuery.length < searchQueryRef.current.length ||
-      !searchQueryRef.current.includes(searchQuery)
-    ) {
-      getStoredCategories().then((categories) => {
-        let filteredCategories = filterCategories(searchQuery, categories);
-
-        setCategories(filteredCategories);
-      });
-
-      return;
-    }
-
-    let filteredCategories = filterCategories(searchQuery, categories);
-    setCategories(() => filteredCategories);
-
+    const filteredCategories = filterCategories(searchQuery, allCategories);
+    setCategories(filteredCategories);
     searchQueryRef.current = searchQuery;
   }, [searchQuery]);
 

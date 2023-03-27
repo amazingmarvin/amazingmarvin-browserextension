@@ -102,6 +102,7 @@ const AddTaskLabelsDropdown = ({ allLabels, labels, checkLabel }) => {
                 placeholder="Search labels"
                 value={searchQuery}
                 onInput={(e) => filterLabels(e.target.value)}
+                autoFocus
               />
             </div>
           </div>

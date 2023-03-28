@@ -26,18 +26,18 @@ const TaskList = ({ apiToken }) => {
 
   useEffect(() => {
     switch (differenceInCalendarDays(day, new Date())) {
-    case -1:
-      setDisplayDate("yesterday");
-      break;
-    case 0:
-      setDisplayDate("today");
-      break;
-    case 1:
-      setDisplayDate("tomorrow");
-      break;
-    default:
-      setDisplayDate(formatDate(day));
-      break;
+      case -1:
+        setDisplayDate("yesterday");
+        break;
+      case 0:
+        setDisplayDate("today");
+        break;
+      case 1:
+        setDisplayDate("tomorrow");
+        break;
+      default:
+        setDisplayDate(formatDate(day));
+        break;
     }
   }, [day, setDisplayDate]);
 
@@ -58,11 +58,17 @@ const TaskList = ({ apiToken }) => {
   });
 
   return (
-    <div className="overflow-y-scroll scrollbar-today">
-      <TaskListHeader day={day} setDay={setDay} setIsLoading={setIsLoading}/>
+    <div
+      className={
+        isLoading
+          ? "scrollbar-hidden pr-3"
+          : "overflow-y-scroll scrollbar-today"
+      }
+    >
+      <TaskListHeader day={day} setDay={setDay} setIsLoading={setIsLoading} />
       {isLoading ? (
         <div className="h-64 grid place-content-center p-8">
-          <LoadingSpinner/>
+          <LoadingSpinner />
         </div>
       ) : tasks.length ? (
         <ul>{renderedTasks}</ul>

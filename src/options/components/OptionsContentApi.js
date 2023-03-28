@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { getStoredToken, setStoredToken } from "../../utils/storage";
 import { verifyToken } from "../../utils/api";
@@ -6,20 +6,17 @@ import { verifyToken } from "../../utils/api";
 import MarvinButton from "../../components/MarvinButton";
 
 const OptionsContentApi = () => {
+  const [initialApiToken, setInitialApiToken] = useState("");
   const [apiToken, setApiToken] = useState("");
+  const [loggedOut, setLoggedOut] = useState(false);
   const [wrongToken, setWrongToken] = useState(false);
   const [successToken, setSuccessToken] = useState(false);
 
   useEffect(() => {
     getStoredToken().then((token) => {
-      // Save X-API-Token value or X-FULL-ACCESS-TOKEN value
-      if (token && "X-API-Token" in token) {
-        setApiToken(token["X-API-Token"]);
-      }
-
-      if (token && "X-Full-Access-Token" in token) {
-        setApiToken(token["X-Full-Access-Token"]);
-      }
+      const apiToken = (token && (token["X-API-Token"] || token["X-Full-Access-Token"])) || "";
+      setApiToken(apiToken);
+      setInitialApiToken(apiToken);
     });
   }, []);
 
@@ -35,8 +32,9 @@ const OptionsContentApi = () => {
     });
   };
 
-  const handleSave = async () => {
-    if (!apiToken) {
+  const save = useCallback(async (token) => {
+    setLoggedOut(false);
+    if (!token) {
       setWrongToken(true);
       setTimeout(() => {
         setWrongToken(false);
@@ -44,7 +42,7 @@ const OptionsContentApi = () => {
       return;
     }
 
-    let justTokenPart = apiToken.split(" ").at(-1);
+    let justTokenPart = token.split(" ").at(-1);
     let tokenResult = await verifyToken(justTokenPart);
 
     if (!tokenResult) {
@@ -58,10 +56,29 @@ const OptionsContentApi = () => {
       setWrongToken(false);
       saveTokenToStorageAndState(tokenResult);
       setSuccessToken(true);
+      setInitialApiToken(token);
       setTimeout(() => {
         setSuccessToken(false);
       }, 2000);
     }
+  }, []);
+
+  const handleSave = useCallback(() => {
+    save(apiToken);
+  }, [apiToken]);
+
+  const paste = useCallback((e) => {
+    const pastedToken = e.clipboardData.getData("text");
+    if (pastedToken) {
+      save(pastedToken);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    setInitialApiToken("");
+    setApiToken("");
+    setStoredToken(null);
+    setLoggedOut(true);
   };
 
   return (
@@ -89,15 +106,26 @@ const OptionsContentApi = () => {
         {successToken && (
           <p className="text-green-500 mt-3">Token successfully saved.</p>
         )}
-        <div className="flex flex-row justify-around w-full mt-3 mb-3">
+        {loggedOut && (
+          <p className="text-red-500 mt-3">
+            You have logged out. You'll need to enter a new token to continue use of this browser extension.
+          </p>
+        )}
+        <div className="flex flex-row justify-around w-full mt-3 mb-3 gap-2">
           <input
             type="text"
             placeholder="Paste your token here"
             value={apiToken}
             onChange={(event) => setApiToken(event.target.value.trim())}
-            className="input input-primary input-bordered w-full mr-2"
+            onPaste={paste}
+            className="input input-primary input-bordered w-full"
           />
-          <MarvinButton onClick={handleSave}>Save</MarvinButton>
+          {apiToken && apiToken !== initialApiToken && (
+            <MarvinButton onClick={handleSave}>Save</MarvinButton>
+          )}
+          {apiToken && apiToken === initialApiToken && (
+            <MarvinButton onClick={handleLogout}>Logout</MarvinButton>
+          )}
         </div>
       </div>
     </div>

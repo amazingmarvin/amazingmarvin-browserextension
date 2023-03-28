@@ -71,7 +71,7 @@ const TaskList = ({ apiToken }) => {
           <LoadingSpinner />
         </div>
       ) : tasks.length ? (
-        <ul>{renderedTasks}</ul>
+        <ul className="pb-[30px]">{renderedTasks}</ul>
       ) : (
         <div className="h-64 grid place-content-center p-8">
           <h2 className="text-lg">

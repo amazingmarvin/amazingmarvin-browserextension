@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { verifyToken, getLabels, getCategories } from "../../utils/api";
 import { setStoredToken } from "../../utils/storage";
@@ -13,24 +13,22 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
   const [verifyingToken, setVerifyingToken] = useState(false);
   const [wrongToken, setWrongToken] = useState(false);
 
+  const changeToken = useCallback((e) => {
+    setToken(e.target.value.trim())
+  }, [setToken]);
+
   const saveTokenToStorageAndState = (tokenObject) => {
     setStoredToken(tokenObject).then(() => {
       setApiToken(tokenObject);
+      setOnboarded(true);
     });
   };
 
-  const handleSave = async () => {
-    if (!token) {
-      setWrongToken(true);
-      setTimeout(() => {
-        setWrongToken(false);
-      }, 3000);
-      return;
-    }
-
+  const save = useCallback(async (apiToken) => {
+    setWrongToken(false);
     setVerifyingToken(true);
 
-    let justTokenPart = token.split(" ").at(-1);
+    let justTokenPart = apiToken.split(" ").at(-1);
     let tokenResult = await verifyToken(justTokenPart);
 
     if (!tokenResult) {
@@ -47,10 +45,24 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
       await getLabels();
       await getCategories();
       setVerifyingToken(false);
-
-      setOnboarded(true);
     }
-  };
+  }, [setWrongToken, setVerifyingToken]);
+
+  const paste = useCallback((e) => {
+    const pastedToken = e.clipboardData.getData("text");
+    if (pastedToken) {
+      save(pastedToken);
+    }
+  }, [token]);
+
+  const handleSave = useCallback(() => {
+    if (!token) {
+      setWrongToken(true);
+      return;
+    }
+
+    save(token);
+  }, [token, save, setWrongToken]);
 
   return (
     <div className="card w-full text-info-content">
@@ -89,12 +101,18 @@ const OnboardingPage = ({ setApiToken, setOnboarded }) => {
             type="text"
             placeholder="Paste your token here"
             value={token}
-            onChange={(event) => setToken(event.target.value.trim())}
+            onChange={changeToken}
             className="input input-primary input-bordered w-full max-w-xs"
+            autoFocus
+            onPaste={paste}
           />
         </div>
         <div className="card-actions justify-end">
-          {!verifyingToken ? (
+          {!token ? (
+            <MarvinButton className="invisible">
+              <LoadingSpinner width="w-4" height="h-4" />
+            </MarvinButton>
+          ) : !verifyingToken ? (
             <button
               className="text-white bg-gradient-to-r from-[#26d6c4] to-[#10b1d3] hover:bg-gradient-to-br focus:outline-none shadow-lg shadow-[0_2px_10px_rgba(28,197,203,0.5)] font-medium rounded-lg text-sm text-center px-5 py-2.5 mx-1 my-1"
               onClick={handleSave}

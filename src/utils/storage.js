@@ -1,4 +1,8 @@
 export function getStoredToken() {
+  if (localStorage.apiToken) {
+    return Promise.resolve(JSON.parse(localStorage.apiToken));
+  }
+
   return new Promise((resolve) => {
     chrome.storage.local.get(["apiToken"]).then((result) => {
       resolve(result.apiToken);
@@ -6,9 +10,19 @@ export function getStoredToken() {
   });
 }
 
-export function setStoredToken(token) {
+export function setStoredToken(apiToken) {
+  // Save to localStorage so that the Onboarding doesn't flash while the
+  // apiToken is being loaded.
+  if (apiToken) {
+    localStorage.apiToken = JSON.stringify(apiToken);
+  } else {
+    delete localStorage.apiToken;
+  }
+
+  // Continue to save to chrome.storage.local so that background script can
+  // access it.
   return new Promise((resolve) => {
-    chrome.storage.local.set({ apiToken: token }).then(() => {
+    chrome.storage.local.set({ apiToken }).then(() => {
       resolve();
     });
   });

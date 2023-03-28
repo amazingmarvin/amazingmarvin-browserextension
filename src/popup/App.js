@@ -8,22 +8,9 @@ import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState(localStorage.activeTab || "add-task");
-  const [onboarded, setOnboarded] = useState(false);
-  const [apiToken, setApiToken] = useState(null);
-
-  useEffect(() => {
-    getStoredToken().then((token) => {
-      if (token) {
-        setOnboarded(true);
-        setApiToken(token);
-      }
-    });
-  }, [onboarded]);
-
-  useEffect(() => {
-    localStorage.activeTab = activeTab;
-  }, [activeTab]);
+  const [activeTab, setActiveTab] = useState("add-task");
+  const [apiToken, setApiToken] = useState(localStorage.apiToken ? JSON.parse(localStorage.apiToken) : null);
+  const [onboarded, setOnboarded] = useState(!!localStorage.apiToken);
 
   return (
     <div className="flex flex-col w-[400px] min-h-[400px] max-h-[600px] justify-between">

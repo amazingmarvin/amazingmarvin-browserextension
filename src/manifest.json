@@ -25,6 +25,14 @@
       "js": [
         "./content_scripts/gmail.js"
       ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./content_scripts/successMessage.js"
+      ]
     }
   ],
   "background": {

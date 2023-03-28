@@ -7,10 +7,21 @@ import BottomMenu from "./components/BottomMenu";
 import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 
+let initialApiToken = null;
+try {
+  if (localStorage.apiToken) {
+    initialApiToken = JSON.parse(localStorage.apiToken);
+    if (!initialApiToken["X-API-Token"] && !initialApiToken["X-Full-Access-Token"]) {
+      initialApiToken = null;
+    }
+  }
+} catch (err) {
+}
+
 const App = () => {
   const [activeTab, setActiveTab] = useState("add-task");
-  const [apiToken, setApiToken] = useState(localStorage.apiToken ? JSON.parse(localStorage.apiToken) : null);
-  const [onboarded, setOnboarded] = useState(!!localStorage.apiToken);
+  const [apiToken, setApiToken] = useState(initialApiToken);
+  const [onboarded, setOnboarded] = useState(!!initialApiToken);
 
   return (
     <div className="flex flex-col w-[400px] min-h-[400px] max-h-[600px] justify-between">

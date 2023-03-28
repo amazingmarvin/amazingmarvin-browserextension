@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { formatDate, isValidDate } from "../../utils/dates";
-import { getStoredGeneralSettings } from "../../utils/storage";
+import { getStoredGeneralSettings, setStoredToken } from "../../utils/storage";
 import { addTask } from "../../utils/api";
 
 import { BsSun, BsMoon, BsCalendarPlus, BsCalendarX } from "react-icons/bs";
@@ -19,7 +19,9 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import "react-day-picker/dist/style.css";
 import "../../styles/day-picker.css";
 
-const AddTask = () => {
+let messageCounter = 0;
+
+const AddTask = ({ setOnboarded }) => {
   const [displaySettings, setDisplaySettings] = useState({});
 
   const [taskTitle, setTaskTitle] = useState(localStorage.savedTitle || "");
@@ -42,6 +44,11 @@ const AddTask = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const logout = useCallback(() => {
+    setStoredToken(null);
+    setOnboarded(false);
+  }, []);
+
   useEffect(() => {
     getStoredGeneralSettings().then((settings) => {
       setDisplaySettings(settings);
@@ -55,6 +62,17 @@ const AddTask = () => {
   useEffect(() => {
     localStorage.savedNote = note;
   }, [note]);
+
+  useEffect(() => {
+    const snapshot = ++messageCounter;
+    if (message === "success") {
+      setTimeout(() => {
+        if (snapshot === messageCounter) {
+          setMessage("");
+        }
+      }, 3000);
+    }
+  }, [message]);
 
   const resetForm = () => {
     setTaskTitle("");
@@ -76,6 +94,7 @@ const AddTask = () => {
   };
 
   const handleAddTask = () => {
+    setMessage("");
     let shortcuts = [];
 
     let data = {
@@ -146,10 +165,6 @@ const AddTask = () => {
       } else {
         setMessage("fail");
       }
-
-      setInterval(() => {
-        setMessage("");
-      }, 2000);
     });
   };
 
@@ -382,8 +397,8 @@ const AddTask = () => {
                 className="p-4 my-2 text-sm text-red-800 rounded-lg bg-red-50"
                 role="alert"
               >
-                <span className="font-medium">Error!</span> Task couldn't get
-                added to Marvin.
+                <span className="font-medium">Error!</span> Failed to add Task.
+                If you rotated your API credentials, please <a href="#" onClick={logout}>logout</a>. Otherwise try again or contact support!
               </div>
             ))}
           {!loading ? (

@@ -7,6 +7,15 @@ import {
   setStoredLabels,
 } from "./storage";
 
+export function testAPI(token) {
+  return fetch("https://serv.amazingmarvin.com/api/test", {
+    method: "POST",
+    headers: {
+      ...token
+    },
+  });
+}
+
 export async function verifyToken(token) {
   const res = await fetch("https://serv.amazingmarvin.com/api/test", {
     method: "POST",
@@ -52,11 +61,11 @@ export async function getTasks(token, day) {
   );
 
   if (res.ok) {
-    return await res.json();
+    return { ok: res.ok, status: res.status, tasks: await res.json() };
   }
 
   if (!res.ok) {
-    console.log(res);
+    return { ok: res.ok, status: res.status, tasks: [] };
   }
 }
 

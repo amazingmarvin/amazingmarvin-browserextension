@@ -29,8 +29,8 @@ const App = () => {
         <OnboardingPage setApiToken={setApiToken} setOnboarded={setOnboarded} />
       ) : (
         <>
-          {activeTab === "today" && <TaskList apiToken={apiToken} />}
-          {activeTab === "add-task" && <AddTask />}
+          {activeTab === "today" && <TaskList apiToken={apiToken} setOnboarded={setOnboarded} />}
+          {activeTab === "add-task" && <AddTask setOnboarded={setOnboarded} />}
           <BottomMenu activeTab={activeTab} setActiveTab={setActiveTab} />
         </>
       )}

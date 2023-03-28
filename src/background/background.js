@@ -12,7 +12,7 @@ import {
 } from "../utils/storage";
 import { getLabels, getCategories } from "../utils/api";
 import { formatDate } from "../utils/dates";
-import { setBadge } from "../utils/badge";
+import { clearBadge, setBadge } from "../utils/badge";
 
 console.log("background.js running");
 
@@ -130,8 +130,12 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   }
 
   if (alarm.name === "updateBadge") {
-    getTasks(token, new Date()).then((tasks) => {
-      setBadge(tasks.length);
+    getTasks(token, new Date()).then(({ ok, status, tasks }) => {
+      if (ok) {
+        setBadge(tasks.length);
+      } else {
+        clearBadge();
+      }
     });
 
     return;

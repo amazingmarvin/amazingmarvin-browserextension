@@ -16,6 +16,18 @@ import { setBadge } from "../utils/badge";
 
 console.log("background.js running");
 
+const addTaskAndSetMessage = (data) => {
+  addTask(data).then((msg) => {
+    if (msg === "success") {
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          message: "success",
+        });
+      });
+    }
+  });
+};
+
 const getTabTitleAsHyperlink = () => {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -95,7 +107,7 @@ chrome.contextMenus.onClicked.addListener((event) => {
       };
 
       console.log("scheduled", data);
-      addTask(data);
+      addTaskAndSetMessage(data);
     }
 
     if (event.menuItemId === "addTaskUnscheduled") {
@@ -106,7 +118,7 @@ chrome.contextMenus.onClicked.addListener((event) => {
       };
 
       console.log("unscheduled", data);
-      addTask(data);
+      addTaskAndSetMessage(data);
     }
   });
 });

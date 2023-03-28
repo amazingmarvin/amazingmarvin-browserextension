@@ -54,7 +54,7 @@ const AddTask = () => {
 
   useEffect(() => {
     localStorage.savedNote = note;
-  }, [taskTitle]);
+  }, [note]);
 
   const resetForm = () => {
     setTaskTitle("");
@@ -318,7 +318,10 @@ const AddTask = () => {
 
     return (
       <div className="form-control justify-between w-full gap-4 divide-y">
-        <div id="AddTask" className="form-control w-full pt-2 pl-5 pr-2 overflow-y-scroll">
+        <div
+          id="AddTask"
+          className="form-control w-full pt-2 pl-5 pr-2 overflow-y-scroll"
+        >
           <AddTaskTitle title={taskTitle} setTaskTitle={setTaskTitle} />
 
           {displaySettings?.displayTaskNoteInput && (
@@ -384,7 +387,11 @@ const AddTask = () => {
               </div>
             ))}
           {!loading ? (
-            <div className="relative w-full px-3" data-hov={taskTitle ? null : "The task title is required"} data-pos="T C">
+            <div
+              className="relative w-full px-3"
+              data-hov={taskTitle ? null : "The task title is required"}
+              data-pos="T C"
+            >
               <MarvinButton
                 width="w-full"
                 disabled={!taskTitle}
@@ -402,7 +409,9 @@ const AddTask = () => {
   };
 
   return (
-    <div className="overflow-auto flex flex-1 scrollbar-parent">{displayElements()}</div>
+    <div className="overflow-auto flex flex-1 scrollbar-parent">
+      {displayElements()}
+    </div>
   );
 };
 

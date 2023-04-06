@@ -7,6 +7,9 @@ import {
   setStoredLabels,
 } from "./storage";
 
+export const API_OK = "success";
+export const API_ERROR = "fail";
+
 export function testAPI(token) {
   return fetch("https://serv.amazingmarvin.com/api/test", {
     method: "POST",
@@ -146,24 +149,18 @@ export async function addTask(data) {
   let token = await getStoredToken().then((token) => token);
   data.timeZoneOffset = new Date().getTimezoneOffset();
 
-  const res = await fetch(`https://serv.amazingmarvin.com/api/addTask`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...token,
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (res.ok) {
-    return new Promise((resolve) => {
-      resolve("success");
+  try {
+    const res = await fetch(`https://serv.amazingmarvin.com/api/addTask`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...token,
+      },
+      body: JSON.stringify(data),
     });
-  }
 
-  if (!res.ok) {
-    return new Promise((resolve) => {
-      resolve("fail");
-    });
+    return res.ok ? API_OK : API_ERROR;
+  } catch (err) {
+    return API_ERROR;
   }
 }

@@ -4,7 +4,7 @@
   "description": "Browser Extension for Amazing Marvin",
   "scripts": {
     "start": "parcel watch src/manifest.json --host localhost --config @parcel/config-webextension",
-    "build": "parcel build src/manifest.json --config @parcel/config-webextension",
+    "build": "rm -rf dist && parcel build src/manifest.json --config @parcel/config-webextension",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

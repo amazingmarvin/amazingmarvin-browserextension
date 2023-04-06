@@ -1,5 +1,5 @@
 export function getStoredToken() {
-  if (localStorage.apiToken) {
+  if (typeof localStorage !== "undefined" && localStorage.apiToken) {
     return Promise.resolve(JSON.parse(localStorage.apiToken));
   }
 
@@ -13,7 +13,9 @@ export function getStoredToken() {
 export function setStoredToken(apiToken) {
   // Save to localStorage so that the Onboarding doesn't flash while the
   // apiToken is being loaded.
-  if (apiToken) {
+  if (typeof localStorage === "undefined") {
+    // OK
+  } else if (apiToken) {
     localStorage.apiToken = JSON.stringify(apiToken);
   } else {
     delete localStorage.apiToken;

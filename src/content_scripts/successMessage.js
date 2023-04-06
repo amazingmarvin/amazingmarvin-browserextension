@@ -1,3 +1,6 @@
+let marvinSuccessMessage = document.createElement("div");
+document.body.appendChild(marvinSuccessMessage);
+
 function changeClasses() {
   marvinSuccessMessage.classList.remove("marvinSuccessMessageHidden");
   marvinSuccessMessage.classList.add("marvinSuccessMessageVisible");
@@ -6,10 +9,6 @@ function changeClasses() {
     marvinSuccessMessage.classList.add("marvinSuccessMessageHidden");
   }, 2000);
 }
-
-let marvinSuccessMessage = document.createElement("div");
-marvinSuccessMessage.textContent = "Task successfully added to Marvin!";
-document.body.appendChild(marvinSuccessMessage);
 
 let marvinSuccessMessageStyles = document.createElement("style");
 marvinSuccessMessageStyles.innerHTML = `
@@ -48,7 +47,8 @@ marvinSuccessMessage.classList.add(
 );
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.message === "success") {
+  if (message.message === "success" || message.message === "fail") {
+    marvinSuccessMessage.textContent = message.message === "success" ? "Task successfully added to Marvin!" : "Failed to add Task to Marvin!";
     changeClasses();
   }
 });

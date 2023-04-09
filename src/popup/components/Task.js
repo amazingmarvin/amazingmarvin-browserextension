@@ -10,7 +10,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log(task);
+  const urlRegex = /\[([^\]]+)]\((https?:\/\/\S+)\)/g;
 
   const handleChange = () => {
     setIsLoading(true);
@@ -53,7 +53,9 @@ const Task = ({ task, apiToken, updateTasks }) => {
             <HiFlag size={20} className="text-primary" />
           </div>
         )}
-        <label className="overflow-auto scrollbar-hide">{task.title}</label>
+        <label className="overflow-auto scrollbar-hide">
+          {task.title.replace(urlRegex, "$1")}
+        </label>
       </div>
       {isHovered && (
         <div

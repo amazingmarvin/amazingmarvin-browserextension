@@ -19,7 +19,12 @@ module.exports = {
   },
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        iconColor: "#a9b1b1",
+        iconHoverColor: "#5ec0bc",
+      },
+    },
   },
   plugins: [require("daisyui")],
 };

@@ -1,6 +1,7 @@
-const RadioButton = ({ children, value, onChange, onClick, ...others }) => {
+const RadioButton = ({ children, value, onChange, onClick, className, ...others }) => {
+  const classes = `hover:cursor-pointer relative ${className || ""}`;
   return (
-    <label className="hover:cursor-pointer relative" {...others}>
+    <label className={classes} {...others}>
       <input
         type="radio"
         checked={value}

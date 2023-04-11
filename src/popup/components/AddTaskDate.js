@@ -1,6 +1,8 @@
 import RadioButton from "../../components/RadioButton";
 
 const AddTaskDate = ({ type, date, buttons }) => {
+  const buttonClasses = "text-iconColor hover:text-iconHoverColor";
+
   const radioButtons = buttons.map((button) => {
     if (button.hasOwnProperty("isDatePicker")) {
       return (
@@ -11,6 +13,7 @@ const AddTaskDate = ({ type, date, buttons }) => {
           onChange={button.onChange}
           data-hov={button.hoverText}
           data-pos={button.hoverPos}
+          className={buttonClasses}
         >
           {button.icon}
         </RadioButton>
@@ -24,6 +27,7 @@ const AddTaskDate = ({ type, date, buttons }) => {
         onChange={button.onChange}
         data-hov={button.hoverText}
         data-pos={button.hoverPos}
+        className={buttonClasses}
       >
         {button.icon}
       </RadioButton>

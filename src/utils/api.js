@@ -64,7 +64,13 @@ export async function getTasks(token, day) {
   );
 
   if (res.ok) {
-    return { ok: res.ok, status: res.status, tasks: await res.json() };
+    const tasks = await res.json();
+    tasks.sort((x, y) => {
+      const xr = x.rank ?? x.masterRank;
+      const yr = y.rank ?? y.masterRank;
+      return xr - yr;
+    });
+    return { ok: res.ok, status: res.status, tasks };
   }
 
   if (!res.ok) {

@@ -9,8 +9,8 @@
   Browser Extension for Amazing Marvin app. Create new tasks and work on your daily task list.
 </p>
 
-<p>
-Coming soon to Chrome Web Store and others!
+<p align="center">
+  Coming soon to Chrome Web Store and others!
 </p>
 
 <!-- TABLE OF CONTENTS -->

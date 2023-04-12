@@ -13,20 +13,25 @@
   Coming soon to Chrome Web Store and others!
 </p>
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Bmy3IIj8ur0/0.jpg)](https://www.youtube.com/watch?v=Bmy3IIj8ur0)
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#about-the-project">About the Project</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#built-with">Built with</a></li>
     <li><a href="#installation">Installation</a></li>
   </ol>
 </details>
 
-## About The Project
+## Demo
+
+Watch a short video on youtube here:
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Bmy3IIj8ur0/0.jpg)](https://www.youtube.com/watch?v=Bmy3IIj8ur0)
+
+## About the Project
 
 <p align="center">
   <a href="https://amazingmarvin.com/">
@@ -70,7 +75,7 @@ This section shows lists of features that are currently implemented in the exten
 
 ![Options](README/settings.png)
 
-## Built With
+## Built with
 
 Extension is built using:
 

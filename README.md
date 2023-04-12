@@ -13,6 +13,8 @@
   Coming soon to Chrome Web Store and others!
 </p>
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Bmy3IIj8ur0/0.jpg)](https://www.youtube.com/watch?v=Bmy3IIj8ur0)
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>

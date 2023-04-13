@@ -6,11 +6,11 @@
 </p>
 
 <p align="center">
-  Browser Extension for Amazing Marvin app. Create new tasks and work on your daily task list.
-</p>
-
-<p align="center">
-  Coming soon to Chrome Web Store and others!
+  Add to
+  <a href="https://chrome.google.com/webstore/detail/amazing-marvin/gjohmhcpmpjfnkipjjcgmiklimmjfhlp">Chrome</a>,
+  Edge (soon!),
+  Firefox (soon!),
+  Safari (soon!)
 </p>
 
 <!-- TABLE OF CONTENTS -->

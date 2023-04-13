@@ -39,11 +39,11 @@ Watch a short video on youtube here:
   </a>
 </p>
 
-Amazing Marvin browser extension was built with the intention to help users quickly add tasks to their Marvin account
-without having to open the app. Besides being able to add new tasks to Marvin, it also allows them to:
+This browser extension was built with the intention to help you quickly add tasks to your Marvin account
+without having to open the app. Besides being able to add new tasks to Marvin, it also allows you to:
 
-* See their daily list of tasks
-* Add emails to Marvin
+* See your daily list of tasks
+* Add emails to Marvin from gmail
 * Add snippets of selected text to Marvin in just two clicks
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -57,7 +57,7 @@ This section shows lists of features that are currently implemented in the exten
 ![Badge](README/badge.png)
 
 * Gmail Addon - lets you add emails to Marvin, both from the list of emails and from the single email view. When the
-  task is created, a message is displayed at the bottom to let users know that the task was created.
+  task is created, a message is displayed at the bottom to let you know that the task was created.
 
 ![Gmail](README/gmail.png)
 
@@ -119,9 +119,10 @@ the `dist` folder from the project.
 
 ## Roadmap
 
-- [ ] Save input data to local storage in case user closes the popup
 - [ ] Optimize content script code
 - [ ] Add support for Firefox
 - [ ] Display currently tracked task in the popup
+- [ ] Add priorities and other task field
+- [ ] Autocomplete categories, labels, and others while inputting tasks
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

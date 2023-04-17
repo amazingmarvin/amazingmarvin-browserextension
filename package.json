@@ -22,7 +22,7 @@
     "extension"
   ],
   "author": "Branimir Rijavec",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/amazingmarvin/amazingmarvin-browserextension/issues"
   },

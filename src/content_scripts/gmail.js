@@ -62,7 +62,9 @@ getStoredGmailSettings().then((settings) => {
     "T-I-ax7",
     "T-I-Js-IF"
   );
-  marvinButtonContainer.innerHTML = '<div class="asa"></div>';
+  const asaDiv = document.createElement("div");
+  asaDiv.classList.add("asa");
+  marvinButtonContainer.appendChild(asaDiv);
   marvinButtonContainer.setAttribute("data-tooltip", "Add to Marvin");
   marvinButtonContainer.setAttribute("role", "button");
   marvinButtonContainer.setAttribute("tabIndex", "0");
@@ -101,8 +103,8 @@ getStoredGmailSettings().then((settings) => {
   marvinSuccessMessage.textContent = "Task successfully added to Marvin!";
   document.body.appendChild(marvinSuccessMessage);
 
-  let marvinSuccessMessageStyles = document.createElement("style");
-  marvinSuccessMessageStyles.innerHTML = `
+  let marvinSuccessStyles = document.createElement("style");
+  marvinSuccessStyles.appendChild(document.createTextNode(`
     .marvinSuccessMessageVisible {
         display: grid;
         place-items: center;
@@ -127,10 +129,10 @@ getStoredGmailSettings().then((settings) => {
         border-radius: 10px;
         text-align: center;
         padding: 10px;
-    }`;
+    }`));
   document
     .getElementsByTagName("head")[0]
-    .appendChild(marvinSuccessMessageStyles);
+    .appendChild(marvinSuccessStyles);
 
   marvinSuccessMessage.classList.add(
     "marvinSuccessMessage",

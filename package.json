@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rijavecb/amazingmarvin-browserextension.git"
+    "url": "git+https://github.com/amazingmarvin/amazingmarvin-browserextension.git"
   },
   "keywords": [
     "amazing marvin",
@@ -24,9 +24,9 @@
   "author": "Branimir Rijavec",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rijavecb/amazingmarvin-browserextension/issues"
+    "url": "https://github.com/amazingmarvin/amazingmarvin-browserextension/issues"
   },
-  "homepage": "https://github.com/rijavecb/amazingmarvin-browserextension#readme",
+  "homepage": "https://github.com/amazingmarvin/amazingmarvin-browserextension#readme",
   "devDependencies": {
     "@parcel/config-webextension": "^2.8.2",
     "parcel": "^2.8.2",

@@ -60,5 +60,10 @@
     "tabs",
     "alarms",
     "contextMenus"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "browserextension@amazingmarvin.com"
+    }
+  }
 }

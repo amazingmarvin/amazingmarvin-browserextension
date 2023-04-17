@@ -106,12 +106,18 @@ you'll need to build it and then load it in your browser.
    ```sh
     npm run build
     ```
+4. Build for firefox
+   ```sh
+    npm run ff:build
+    ```
 
 ### Loading the extension in your browser
 
 To load the extension, go to the extensions page in your browser. For Chrome, you can go to `chrome://extensions/` and
 for Edge, you can go to `edge://extensions/`. Once you're there, click on the "Load unpacked" button and select
 the `dist` folder from the project.
+
+In Firefox, open `about:debugging#/runtime/this-firefox` and click "Load Temporary Add-On...".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

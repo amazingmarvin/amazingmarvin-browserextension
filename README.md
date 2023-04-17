@@ -91,12 +91,14 @@ Extension is built using:
 
 ### Building the extension
 
-To start editing or using the exstension, you'll first need to clone the repo and install the dependencies. After that
-you'll need to build it and then load it in your browser.
+To start editing or using the exstension, you'll first need to clone the repo
+and install the dependencies. After that you'll need to build it and then load
+it in your browser. Building requires `node` (tested with v14 and higher), and
+`npm`.
 
 1. Clone the repo
    ```sh
-   gh repo clone rijavecb/amazingmarvin-browserextension
+   gh repo clone amazingmarvin/amazingmarvin-browserextension
    ```
 2. Install NPM packages
    ```sh
@@ -117,7 +119,8 @@ To load the extension, go to the extensions page in your browser. For Chrome, yo
 for Edge, you can go to `edge://extensions/`. Once you're there, click on the "Load unpacked" button and select
 the `dist` folder from the project.
 
-In Firefox, open `about:debugging#/runtime/this-firefox` and click "Load Temporary Add-On...".
+In Firefox, open `about:debugging#/runtime/this-firefox` and click "Load
+Temporary Add-On..." and select the `dist_ff` folder from the project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

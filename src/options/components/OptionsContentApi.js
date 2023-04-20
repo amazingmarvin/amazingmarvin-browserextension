@@ -5,12 +5,35 @@ import { verifyToken } from "../../utils/api";
 
 import MarvinButton from "../../components/MarvinButton";
 
+function copyText(text, showToastr=true, what="text") {
+  const temp = document.createElement("PRE");
+  temp.opacity = 0;
+  temp.position = "absolute";
+  temp.innerText = text;
+  document.body.appendChild(temp);
+
+  try {
+    const range = document.createRange();
+    range.selectNode(temp);
+    const selection = getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    const success = document.execCommand("copy");
+  } catch (err) { // eslint-disable-line
+    // Do nothing
+  } finally {
+    document.body.removeChild(temp);
+  }
+}
+
 const OptionsContentApi = () => {
   const [initialApiToken, setInitialApiToken] = useState("");
   const [apiToken, setApiToken] = useState("");
   const [loggedOut, setLoggedOut] = useState(false);
   const [wrongToken, setWrongToken] = useState(false);
   const [successToken, setSuccessToken] = useState(false);
+  const [showToken, setShowToken] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     getStoredToken().then((token) => {
@@ -31,6 +54,19 @@ const OptionsContentApi = () => {
       }
     });
   };
+
+  const copyToken = useCallback(() => {
+    copyText(apiToken);
+
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  }, [apiToken, setCopied])
+
+  const toggleShowToken = useCallback(() => {
+    setShowToken((x) => !x);
+  }, [setShowToken]);
 
   const save = useCallback(async (token) => {
     setLoggedOut(false);
@@ -97,6 +133,26 @@ const OptionsContentApi = () => {
           </a>
           .
         </p>
+        <div className="flex flex-row justify-around w-full mt-3 mb-3 gap-2">
+          <input
+            type={showToken ? "text" : "password"}
+            placeholder="Paste your token here"
+            value={apiToken}
+            onChange={(event) => setApiToken(event.target.value.trim())}
+            onPaste={paste}
+            className="input input-primary input-bordered w-full"
+          />
+          {apiToken && (
+            <MarvinButton onClick={copyToken}>Copy</MarvinButton>
+          )}
+          <MarvinButton onClick={toggleShowToken}>{showToken ? "Hide" : "Show"}</MarvinButton>
+          {apiToken && apiToken !== initialApiToken && (
+            <MarvinButton onClick={handleSave}>Save</MarvinButton>
+          )}
+          {apiToken && apiToken === initialApiToken && (
+            <MarvinButton onClick={handleLogout}>Logout</MarvinButton>
+          )}
+        </div>
         {wrongToken && (
           <p className="text-red-500 mt-3">
             Wrong token. Please verify that you copied apiToken or
@@ -106,27 +162,14 @@ const OptionsContentApi = () => {
         {successToken && (
           <p className="text-green-500 mt-3">Token successfully saved.</p>
         )}
+        {copied && (
+          <p className="text-green-500 mt-3">Copied to clipboard!</p>
+        )}
         {loggedOut && (
           <p className="text-red-500 mt-3">
             You have logged out. You'll need to enter a new token to continue use of this browser extension.
           </p>
         )}
-        <div className="flex flex-row justify-around w-full mt-3 mb-3 gap-2">
-          <input
-            type="text"
-            placeholder="Paste your token here"
-            value={apiToken}
-            onChange={(event) => setApiToken(event.target.value.trim())}
-            onPaste={paste}
-            className="input input-primary input-bordered w-full"
-          />
-          {apiToken && apiToken !== initialApiToken && (
-            <MarvinButton onClick={handleSave}>Save</MarvinButton>
-          )}
-          {apiToken && apiToken === initialApiToken && (
-            <MarvinButton onClick={handleLogout}>Logout</MarvinButton>
-          )}
-        </div>
       </div>
     </div>
   );

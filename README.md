@@ -9,7 +9,7 @@
   Add to
   <a href="https://chrome.google.com/webstore/detail/amazing-marvin/gjohmhcpmpjfnkipjjcgmiklimmjfhlp">Chrome</a>,
   Edge (soon!),
-  Firefox (soon!),
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/amazing-marvin/">Firefox</a>,
   Safari (soon!)
 </p>
 

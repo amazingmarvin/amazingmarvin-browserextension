@@ -3,6 +3,8 @@ import { markDone } from "../../utils/api";
 
 import { HiFlag, HiArrowTopRightOnSquare } from "react-icons/hi2";
 
+import scanText, { TEXT_PART, LINK_PART } from "../../utils/scanText";
+
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Task = ({ task, apiToken, updateTasks }) => {
@@ -10,7 +12,20 @@ const Task = ({ task, apiToken, updateTasks }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const urlRegex = /\[([^\]]+)]\((https?:\/\/\S+)\)/g;
+  const titleContent = [];
+  const parts = scanText(task.title);
+  for (let n = 0; n < parts.length; n++) {
+    const part = parts[n];
+    if (part.type === LINK_PART) {
+      titleContent.push(
+        <a key={n} href={part.href} target="_blank">{part.text}</a>
+      );
+    } else {
+      titleContent.push(
+        <span key={n}>{part.text}</span>
+      );
+    }
+  }
 
   const handleChange = () => {
     setIsLoading(true);
@@ -54,7 +69,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
           </div>
         )}
         <label className="overflow-auto scrollbar-hide">
-          {task.title.replace(urlRegex, "$1")}
+          {titleContent}
         </label>
       </div>
       {isHovered && (

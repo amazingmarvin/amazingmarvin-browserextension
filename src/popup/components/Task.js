@@ -17,8 +17,12 @@ const Task = ({ task, apiToken, updateTasks }) => {
   for (let n = 0; n < parts.length; n++) {
     const part = parts[n];
     if (part.type === LINK_PART) {
+      let href = part.href;
+      if (href === "/?wr") {
+        href = "https://app.amazingmarvin.com/?wr";
+      }
       titleContent.push(
-        <a key={n} href={part.href} target="_blank">{part.text}</a>
+        <a key={n} href={href} target="_blank">{part.text}</a>
       );
     } else {
       titleContent.push(

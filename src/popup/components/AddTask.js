@@ -278,7 +278,9 @@ const AddTask = ({ setOnboarded }) => {
 
   const keyUp = useCallback((e) => {
     if (e.which === 13) {
-      if (taskTitle) {
+      if (document.activeElement.tagName === "TEXTAREA") {
+        // Don't create when the note is focused
+      } else if (taskTitle) {
         handleAddTask();
       } else {
         setMessage("The task title is required");

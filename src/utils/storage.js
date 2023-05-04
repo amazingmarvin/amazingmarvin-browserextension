@@ -125,3 +125,19 @@ export function setStoredGeneralSettings(settings) {
     });
   });
 }
+
+export function getStoredBadgeSettings() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["badgeSettings"]).then((result) => {
+      resolve(result.badgeSettings);
+    });
+  });
+}
+
+export function setStoredBadgeSettings(settings) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ badgeSettings: settings }).then(() => {
+      resolve();
+    });
+  });
+}

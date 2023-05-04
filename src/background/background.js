@@ -6,9 +6,11 @@ import {
   setStoredCategories,
   getStoredCategories,
   setStoredGmailSettings,
+  setStoredBadgeSettings,
   getStoredGmailSettings,
   getStoredGeneralSettings,
   setStoredGeneralSettings,
+  getStoredBadgeSettings,
 } from "../utils/storage";
 import { getLabels, getCategories } from "../utils/api";
 import { formatDate } from "../utils/dates";
@@ -67,6 +69,14 @@ chrome.runtime.onInstalled.addListener(() => {
       });
     }
   });
+  getStoredBadgeSettings().then((badgeSettings) => {
+    if (!badgeSettings) {
+      setStoredBadgeSettings({
+        displayBadge: true,
+        backgroundColor: "#1CC5CB",
+      });
+    }
+  });
 
   chrome.contextMenus.create({
     id: "addTask",
@@ -122,19 +132,24 @@ chrome.contextMenus.onClicked.addListener((event) => {
 });
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-  let token = await getStoredToken().then((token) => token);
+  const token = await getStoredToken();
   if (!token) {
     return;
   }
 
   if (alarm.name === "updateBadge") {
-    getTasks(token, new Date()).then(({ ok, status, tasks }) => {
-      if (ok) {
-        setBadge(tasks.length);
-      } else {
-        clearBadge();
-      }
-    });
+    const badgeSettings = await getStoredBadgeSettings();
+
+    if (!badgeSettings?.displayBadge) {
+      return;
+    }
+
+    const { ok, status, tasks } = await getTasks(token, new Date());
+    if (ok) {
+      setBadge(tasks.length);
+    } else {
+      clearBadge();
+    }
 
     return;
   }
@@ -150,6 +165,7 @@ chrome.runtime.onMessage.addListener(async function (
   sender,
   sendResponse
 ) {
+  let token = await getStoredToken();
   let data = {
     done: false,
   };
@@ -190,5 +206,21 @@ chrome.runtime.onMessage.addListener(async function (
         }
       });
     });
+  }
+
+  if (request.message === "toggleBadge") {
+    const badgeSettings = await getStoredBadgeSettings();
+
+    if (!badgeSettings?.displayBadge || !token) {
+      clearBadge();
+      return;
+    }
+
+    const { ok, status, tasks } = await getTasks(token, new Date());
+    if (ok) {
+      setBadge(tasks.length);
+    } else {
+      clearBadge();
+    }
   }
 });

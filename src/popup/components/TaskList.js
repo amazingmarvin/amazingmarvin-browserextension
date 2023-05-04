@@ -4,6 +4,7 @@ import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import { getTasks } from "../../utils/api";
 import { formatDate } from "../../utils/dates";
 import { setBadge } from "../../utils/badge";
+import { getStoredBadgeSettings } from "../../utils/storage";
 
 import Task from "./Task";
 import TaskListHeader from "./TaskListHeader";
@@ -22,13 +23,16 @@ const TaskList = ({ apiToken, setOnboarded }) => {
         setTasks(tasks);
         setIsLoading(false);
         if (formatDate(day) === formatDate(new Date())) {
-          setBadge(tasks.length);
+          getStoredBadgeSettings().then((badgeSettings) => {
+            if (badgeSettings.displayBadge) {
+              setBadge(tasks.length);
+            }
+          });
         }
       } else {
         setIsLoading(false);
         setIsError(true);
       }
-
     });
   }, [day]);
 

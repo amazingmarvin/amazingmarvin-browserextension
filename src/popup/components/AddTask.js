@@ -93,7 +93,7 @@ const AddTask = ({ setOnboarded }) => {
     setLabels([]);
   };
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     setMessage("");
     let shortcuts = [];
 
@@ -166,7 +166,7 @@ const AddTask = ({ setOnboarded }) => {
         setMessage("fail");
       }
     });
-  };
+  }, [setMessage, setLoading, taskTitle, note, scheduleDate, dueDate, labels, parent, timeEstimate]);
 
   const scheduleDateButtons = [
     {
@@ -276,6 +276,16 @@ const AddTask = ({ setOnboarded }) => {
     { text: "2h", value: 7200000 },
   ];
 
+  const keyUp = useCallback((e) => {
+    if (e.which === 13) {
+      if (taskTitle) {
+        handleAddTask();
+      } else {
+        setMessage("The task title is required");
+      }
+    }
+  }, [taskTitle, handleAddTask, setMessage]);
+
   const displayElements = () => {
     if (scheduleDatePicker.visible) {
       return (
@@ -332,7 +342,7 @@ const AddTask = ({ setOnboarded }) => {
     }
 
     return (
-      <div className="form-control justify-between w-full gap-4 divide-y">
+      <div className="form-control justify-between w-full gap-4 divide-y" onKeyUp={keyUp}>
         <div
           id="AddTask"
           className="form-control w-full pt-2 pl-5 pr-2 overflow-y-scroll"
@@ -392,13 +402,20 @@ const AddTask = ({ setOnboarded }) => {
                 <span className="font-medium">Success!</span> Task was
                 successfully added to Marvin.
               </div>
-            ) : (
+            ) : message === "fail" ? (
               <div
                 className="p-4 my-2 text-sm text-red-800 rounded-lg bg-red-50"
                 role="alert"
               >
                 <span className="font-medium">Error!</span> Failed to add Task.
                 If you rotated your API credentials, please <a href="#" onClick={logout}>logout</a>. Otherwise try again or contact support!
+              </div>
+            ) : (
+              <div
+                className="p-4 my-2 text-sm text-red-800 rounded-lg bg-red-50"
+                role="alert"
+              >
+                {message}
               </div>
             ))}
           {!loading ? (

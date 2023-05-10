@@ -123,7 +123,7 @@ function handleMarvinButtonClick(emailData) {
     done: false,
   };
   data.note =
-    `:::info\nSender: ${emailData.senderName}\n\nSender’s e-mail address: ${emailData.senderEmail}`.trim();
+    `:::info\nSender: ${emailData.senderName} <${emailData.senderEmail}>`.trim();
 
   if (scheduleForToday) data.day = formatDate(new Date());
 

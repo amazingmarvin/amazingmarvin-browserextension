@@ -159,7 +159,7 @@ const OptionsContentGeneral = () => {
           <h3 className="font-bold mb-3">Display Set Labels picker</h3>
           <div className="flex flex-row items-center justify-between w-full mt-3 mb-3">
             <p>
-              WWhen this setting is disabled, the set labels picker will be
+              When this setting is disabled, the set labels picker will be
               hidden and tasks will be added without any labels.
             </p>
             <label className="relative inline-flex cursor-pointer ml-8">

@@ -1,5 +1,5 @@
 # 0.3.0 (2023-06-07)
-* Improved stability of GMail integration
+* Improved stability of gmail integration
 
 # 0.2.0 (2023-05-04)
 * You can now choose whether the badge is shown

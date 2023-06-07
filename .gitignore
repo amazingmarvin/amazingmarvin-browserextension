@@ -7,6 +7,7 @@ yarn-error.log*
 lerna-debug.log*
 /chromium.zip
 /firefox.zip
+/source.zip
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

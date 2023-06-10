@@ -14,6 +14,7 @@ export function testAPI(token) {
   return fetch("https://serv.amazingmarvin.com/api/test", {
     method: "POST",
     headers: {
+      AMVIA: "ext",
       ...token
     },
   });
@@ -23,6 +24,7 @@ export async function verifyToken(token) {
   const res = await fetch("https://serv.amazingmarvin.com/api/test", {
     method: "POST",
     headers: {
+      AMVIA: "ext",
       "X-API-Token": token,
     },
   });
@@ -37,6 +39,7 @@ export async function verifyToken(token) {
     const res = await fetch("https://serv.amazingmarvin.com/api/test", {
       method: "POST",
       headers: {
+      AMVIA: "ext",
         "X-Full-Access-Token": token,
       },
     });
@@ -58,6 +61,7 @@ export async function getTasks(token, day) {
     {
       method: "GET",
       headers: {
+        AMVIA: "ext",
         ...token,
       },
     }
@@ -91,6 +95,7 @@ export async function markDone(token, id) {
   const res = await fetch(`https://serv.amazingmarvin.com/api/markDone`, {
     method: "POST",
     headers: {
+      AMVIA: "ext",
       "Content-Type": "application/json",
       ...token,
     },
@@ -115,6 +120,7 @@ export async function getCategories() {
   const res = await fetch(`https://serv.amazingmarvin.com/api/categories`, {
     method: "GET",
     headers: {
+      AMVIA: "ext",
       ...token,
     },
   });
@@ -136,6 +142,7 @@ export async function getLabels() {
   const res = await fetch(`https://serv.amazingmarvin.com/api/labels`, {
     method: "GET",
     headers: {
+      AMVIA: "ext",
       ...token,
     },
   });
@@ -159,6 +166,7 @@ export async function addTask(data) {
     const res = await fetch(`https://serv.amazingmarvin.com/api/addTask`, {
       method: "POST",
       headers: {
+        AMVIA: "ext",
         "Content-Type": "application/json",
         ...token,
       },

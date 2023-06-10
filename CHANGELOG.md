@@ -1,3 +1,6 @@
+# 0.4.0 (2023-06-10)
+* Made API more friendly
+
 # 0.3.0 (2023-06-07)
 * Improved stability of gmail integration
 

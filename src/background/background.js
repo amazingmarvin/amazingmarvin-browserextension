@@ -97,10 +97,10 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   chrome.alarms.create({
-    periodInMinutes: 30,
+    periodInMinutes: 60,
   });
 
-  chrome.alarms.create("updateBadge", { periodInMinutes: 5 });
+  chrome.alarms.create("updateBadge", { periodInMinutes: 10 });
 });
 
 chrome.contextMenus.onClicked.addListener((event) => {

@@ -60,6 +60,8 @@ chrome.runtime.onInstalled.addListener(() => {
   getStoredGeneralSettings().then((generalSettings) => {
     if (!generalSettings) {
       setStoredGeneralSettings({
+        autoPopulateTaskTitle: false,
+        autoPopulateTaskNote: false,
         displayTaskNoteInput: true,
         displayScheduleDatePicker: true,
         displayDueDatePicker: true,

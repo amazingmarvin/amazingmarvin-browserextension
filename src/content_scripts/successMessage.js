@@ -49,8 +49,18 @@ marvinSuccessMessage.classList.add(
 );
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.message === "success" || message.message === "fail") {
-    marvinSuccessMessage.textContent = message.message === "success" ? "Task successfully added to Marvin!" : "Failed to add Task to Marvin!";
+  if (message.message === "getPageTitle") {
+    sendResponse({
+      title: document.title,
+      url: window.location.href,
+    });
+  } else if (message.message === "getSelectedText") {
+    sendResponse({ selectedText: window.getSelection().toString() });
+  } else if (message.message === "success" || message.message === "fail") {
+    marvinSuccessMessage.textContent =
+      message.message === "success"
+        ? "Task successfully added to Marvin!"
+        : "Failed to add Task to Marvin!";
     changeClasses();
   }
 });

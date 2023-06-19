@@ -52,6 +52,45 @@ const AddTask = ({ setOnboarded }) => {
   useEffect(() => {
     getStoredGeneralSettings().then((settings) => {
       setDisplaySettings(settings);
+
+      const {
+        autoPopulateTaskTitle,
+        displayTaskNoteInput,
+        autoPopulateTaskNote,
+      } = settings;
+
+      // Don't overwrite the task title if some text is already saved in local storage
+      if (autoPopulateTaskTitle && taskTitle === "") {
+        // Get the title of the current web page
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+          let url = tabs[0].url;
+          chrome.tabs.sendMessage(
+            tabs[0].id,
+            { message: "getPageTitle" },
+            (response) => {
+              if (response) {
+                setTaskTitle(`[${response.title}](${response.url})`);
+              }
+            }
+          );
+        });
+      }
+      // Don't overwrite the note if some text is already saved in local storage
+      if (displayTaskNoteInput && autoPopulateTaskNote && note === "") {
+        // Get the title of the current web page
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+          let url = tabs[0].url;
+          chrome.tabs.sendMessage(
+            tabs[0].id,
+            { message: "getSelectedText" },
+            (response) => {
+              if (response) {
+                setNote(response.selectedText);
+              }
+            }
+          );
+        });
+      }
     });
   }, []);
 

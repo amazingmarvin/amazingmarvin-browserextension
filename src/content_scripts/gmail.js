@@ -1,4 +1,4 @@
-import { getStoredGmailSettings } from "../utils/storage";
+import { getStoredGmailSettings, getStoredToken } from "../utils/storage";
 import { addTask } from "../utils/api";
 import { formatDate } from "../utils/dates";
 
@@ -54,12 +54,21 @@ function changeSuccessMessageClasses(successMessage) {
     successMessage === "success"
       ? "Task successfully added to Marvin!"
       : "Failed to add Task to Marvin!";
+
+  if (successMessage === "noToken") {
+    marvinSuccessMessage.textContent +=
+      " Please add your Marvin API token by clicking on the extension icon in the browser's toolbar.";
+  }
+
   marvinSuccessMessage.classList.remove("marvinSuccessMessageHidden");
   marvinSuccessMessage.classList.add("marvinSuccessMessageVisible");
-  setTimeout(() => {
-    marvinSuccessMessage.classList.remove("marvinSuccessMessageVisible");
-    marvinSuccessMessage.classList.add("marvinSuccessMessageHidden");
-  }, 2000);
+  setTimeout(
+    () => {
+      marvinSuccessMessage.classList.remove("marvinSuccessMessageVisible");
+      marvinSuccessMessage.classList.add("marvinSuccessMessageHidden");
+    },
+    successMessage === "noToken" ? 6000 : 2000
+  );
 }
 
 function getTableRows() {
@@ -115,7 +124,14 @@ function isNotMarvinButton(element) {
   return !element.classList.contains("marvinButton");
 }
 
-function handleMarvinButtonClick(emailData) {
+async function handleMarvinButtonClick(emailData) {
+  let token = await getStoredToken();
+
+  if (!token) {
+    changeSuccessMessageClasses("noToken");
+    return;
+  }
+
   let emailUrl =
     window.location.href.split("#")[0] + "#inbox/" + emailData.legacyThreadId;
   let data = {

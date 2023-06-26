@@ -1,3 +1,7 @@
+# 0.5.0 (2023-06-26)
+* Improved error messages
+* Added auto-populate settings
+
 # 0.4.0 (2023-06-10)
 * Made API more friendly
 

@@ -7,27 +7,30 @@ const AddTaskNote = ({ note, setNote }) => {
         <label className="label">
           <span className="label-text text-neutral">Task note</span>
         </label>
+      </div>
+      <div className="relative w-full">
+        <textarea
+          placeholder="Task note..."
+          rows={1}
+          value={note}
+          className="textarea textarea-bordered textarea-primary w-full text-base pr-[30px]"
+          onChange={(event) => {
+            setNote(event.target.value);
+          }}
+        />
+
         {note.length > 0 && (
           <button
             type="button"
-            className="relative btn btn-xs btn-ghost btn-circle no-animation text-red-500 mb-[0.15rem]"
-            data-hov="clear note"
-            data-pos="C"
+            className="absolute right-[8px] top-[8px] padding-4 no-animation text-gray-500"
+            data-hov="Clear note"
+            data-pos="R"
             onClick={() => setNote("")}
           >
-            <BsX size={18} />
+            <BsX size={24} />
           </button>
         )}
       </div>
-      <textarea
-        placeholder="Task note..."
-        rows={1}
-        value={note}
-        className="textarea textarea-bordered textarea-primary w-full text-base"
-        onChange={(event) => {
-          setNote(event.target.value);
-        }}
-      ></textarea>
     </div>
   );
 };

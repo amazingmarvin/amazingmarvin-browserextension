@@ -1,6 +1,11 @@
+import React from "react";
 import { BsX } from "react-icons/bs";
 
 const AddTaskNote = ({ note, setNote }) => {
+  const select = React.useCallback((e) => {
+    e.target.select();
+  }, []);
+
   return (
     <div>
       <div className="flex flex-row items-center gap-0.5">
@@ -17,6 +22,7 @@ const AddTaskNote = ({ note, setNote }) => {
           onChange={(event) => {
             setNote(event.target.value);
           }}
+          onFocus={select}
         />
 
         {note.length > 0 && (

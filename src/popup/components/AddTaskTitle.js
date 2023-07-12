@@ -7,28 +7,31 @@ const AddTaskTitle = ({ title, setTaskTitle }) => {
         <label className="label">
           <span className="label-text text-neutral">Task title</span>
         </label>
+      </div>
+      <div className="relative w-full">
+        <input
+          type="text"
+          value={title}
+          onChange={(event) => {
+            setTaskTitle(event.target.value);
+          }}
+          placeholder="Enter task title"
+          className="input input-bordered input-primary w-full text-base pr-[30px]"
+          autoFocus={!title}
+        />
+
         {title.length > 0 && (
           <button
             type="button"
-            className="relative btn btn-xs btn-ghost btn-circle no-animation text-red-500 mb-[0.15rem]"
-            data-hov="clear title"
-            data-pos="C"
+            className="absolute right-[8px] top-1/2 padding-4 transform -translate-y-1/2 no-animation text-gray-500"
+            data-hov="Clear title"
+            data-pos="R"
             onClick={() => setTaskTitle("")}
           >
-            <BsX size={18} />
+            <BsX size={24} />
           </button>
         )}
       </div>
-      <input
-        type="text"
-        value={title}
-        onChange={(event) => {
-          setTaskTitle(event.target.value);
-        }}
-        placeholder="Enter task title"
-        className="input input-bordered input-primary w-full text-base"
-        autoFocus={!title}
-      />
     </div>
   );
 };

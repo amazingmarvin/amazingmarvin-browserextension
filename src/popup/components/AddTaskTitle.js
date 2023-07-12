@@ -1,6 +1,11 @@
+import React from "react";
 import { BsX } from "react-icons/bs";
 
 const AddTaskTitle = ({ title, setTaskTitle }) => {
+  const select = React.useCallback((e) => {
+    e.target.select();
+  }, []);
+
   return (
     <div>
       <div className="flex flex-row items-center gap-0.5">
@@ -18,6 +23,7 @@ const AddTaskTitle = ({ title, setTaskTitle }) => {
           placeholder="Enter task title"
           className="input input-bordered input-primary w-full text-base pr-[30px]"
           autoFocus={!title}
+          onFocus={select}
         />
 
         {title.length > 0 && (

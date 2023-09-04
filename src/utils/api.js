@@ -5,6 +5,9 @@ import {
   setLastSyncedLabels,
   setStoredCategories,
   setStoredLabels,
+  setStoredCustomSections,
+  setStoredDefaultCustomSection,
+  setLastSyncedCustomSections,
 } from "./storage";
 
 export const API_OK = "success";
@@ -15,7 +18,7 @@ export function testAPI(token) {
     method: "POST",
     headers: {
       AMVIA: "ext",
-      ...token
+      ...token,
     },
   });
 }
@@ -39,7 +42,7 @@ export async function verifyToken(token) {
     const res = await fetch("https://serv.amazingmarvin.com/api/test", {
       method: "POST",
       headers: {
-      AMVIA: "ext",
+        AMVIA: "ext",
         "X-Full-Access-Token": token,
       },
     });
@@ -151,6 +154,55 @@ export async function getLabels() {
     let labels = await res.json();
     await setLastSyncedLabels();
     return setStoredLabels(labels);
+  }
+
+  if (!res.ok) {
+    console.log(res);
+  }
+}
+
+export async function getCustomSections() {
+  let token = await getStoredToken().then((token) => token);
+
+  const res = await fetch(
+    `https://serv.amazingmarvin.com/api/doc?id=strategySettings.customStructure`,
+    {
+      method: "GET",
+      headers: {
+        AMVIA: "ext",
+        ...token,
+      },
+    }
+  );
+
+  if (res.ok) {
+    let customSections = await res.json();
+    await setLastSyncedCustomSections();
+    return setStoredCustomSections(customSections.val);
+  }
+
+  if (!res.ok) {
+    console.log(res);
+  }
+}
+
+export async function getDefaultCustomSection() {
+  let token = await getStoredToken().then((token) => token);
+
+  const res = await fetch(
+    `https://serv.amazingmarvin.com/api/doc?id=strategySettings.defaultCustomSection`,
+    {
+      method: "GET",
+      headers: {
+        AMVIA: "ext",
+        ...token,
+      },
+    }
+  );
+
+  if (res.ok) {
+    let defaultCustomSection = await res.json();
+    return setStoredDefaultCustomSection(defaultCustomSection.val);
   }
 
   if (!res.ok) {

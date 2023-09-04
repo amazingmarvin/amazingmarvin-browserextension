@@ -1,11 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
 import {
   getStoredGeneralSettings,
   setStoredGeneralSettings,
+  getStoredCustomSections,
 } from "../../utils/storage";
+
+import { getCustomSections, getDefaultCustomSection } from "../../utils/api";
 
 const OptionsContentGeneral = () => {
   const [displaySettings, setDisplaySettings] = useState({});
+  const [groupByExpanded, setGroupByExpanded] = useState(false);
+  const groupByMethods = [
+    { none: "None" },
+    { dailySection: "Break the Day Down" },
+    { bonusSection: "Just the Essentials" },
+    { customSection: "Custom Sections" },
+  ];
 
   useEffect(() => {
     if (Object.keys(displaySettings).length === 0) {
@@ -26,6 +37,31 @@ const OptionsContentGeneral = () => {
         [setting]: value,
       };
     });
+  };
+
+  const fetchCustomSections = useCallback(async () => {
+    await getCustomSections();
+    setTimeout(() => {
+      getDefaultCustomSection();
+    }, 1000);
+  }, []);
+
+  const dropdownText = () => {
+    if (Object.keys(displaySettings).length === 0) {
+      return "None";
+    }
+
+    const groupByMethod = displaySettings.groupByMethod;
+
+    if (groupByMethod === "none") {
+      return "Group by";
+    }
+
+    const groupByMethodObj = groupByMethods.find(
+      (method) => Object.keys(method)[0] === groupByMethod
+    );
+
+    return Object.values(groupByMethodObj)[0];
   };
 
   return (
@@ -77,6 +113,88 @@ const OptionsContentGeneral = () => {
               />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 peer-focus:ring-offset-2 peer-focus:ring-[#1CC5CB] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1CC5CB]"></div>
             </label>
+          </div>
+        </div>
+      </div>
+      <div className="rounded-lg bg-white shadow-lg text-sm mt-8 mb-8">
+        <div className="px-6 py-8">
+          <h3 className="font-bold mb-3">Group Today list</h3>
+          <div className="flex flex-row items-center justify-between gap-2 w-full mt-3 mb-3">
+            <p className="self-start basis-3/5">
+              Break your daily todo list into sections. Using the dropdown menu,
+              choose which method you would like to use to group your tasks.
+            </p>
+            <div className="self-start basis-2/5 pl-5">
+              <button
+                className="text-white relative w-full bg-[#1CC5CB] hover:bg-[#19B1B6] focus:ring-2 focus:outline-none focus:ring-[#1CC5CB] focus:ring-offset-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                type="button"
+                onClick={() => setGroupByExpanded(!groupByExpanded)}
+              >
+                {dropdownText()}
+                <svg
+                  className="w-2.5 h-2.5 absolute right-3 top-1/2 -translate-y-1/2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 1 4 4 4-4"
+                  />
+                </svg>
+              </button>
+              <div
+                id="dropdown"
+                className={`${
+                  groupByExpanded ? "block" : "hidden"
+                } z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+              >
+                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                  {groupByMethods.map((method, index) => {
+                    const keyName = Object.keys(method)[0];
+                    const value = method[keyName];
+
+                    return (
+                      <li key={keyName}>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          onClick={() => {
+                            handleDisplaySetting("groupByMethod", keyName);
+                            setGroupByExpanded(false);
+
+                            if (keyName === "customSection") {
+                              getStoredCustomSections().then((sections) => {
+                                if (sections.length === 0) {
+                                  fetchCustomSections();
+                                }
+                              });
+                            }
+                          }}
+                        >
+                          {value}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              {displaySettings.groupByMethod === "customSection" &&
+                !groupByExpanded && (
+                  <div className="text-xs text-center">
+                    <button
+                      className="mt-2 text-primary"
+                      onClick={fetchCustomSections}
+                    >
+                      Update Custom Sections
+                    </button>
+                  </div>
+                )}
+            </div>
           </div>
         </div>
       </div>

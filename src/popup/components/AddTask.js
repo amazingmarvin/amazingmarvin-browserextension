@@ -1,7 +1,15 @@
 import { useCallback, useState, useEffect } from "react";
 import { formatDate, isValidDate } from "../../utils/dates";
-import { getStoredGeneralSettings, setStoredToken } from "../../utils/storage";
-import { addTask } from "../../utils/api";
+import {
+  getLastSyncedCustomSections,
+  getStoredGeneralSettings,
+  setStoredToken,
+} from "../../utils/storage";
+import {
+  addTask,
+  getCustomSections,
+  getDefaultCustomSection,
+} from "../../utils/api";
 
 import { BsSun, BsMoon, BsCalendarPlus, BsCalendarX } from "react-icons/bs";
 
@@ -57,6 +65,7 @@ const AddTask = ({ setOnboarded }) => {
         autoPopulateTaskTitle,
         displayTaskNoteInput,
         autoPopulateTaskNote,
+        groupByMethod,
       } = settings;
 
       // Don't overwrite the task title if some text is already saved in local storage
@@ -89,6 +98,16 @@ const AddTask = ({ setOnboarded }) => {
               }
             }
           );
+        });
+      }
+
+      if (groupByMethod === "customSection") {
+        getLastSyncedCustomSections().then((lastSyncedCustomSections) => {
+          if (formatDate(new Date()) !== lastSyncedCustomSections) {
+            getCustomSections().then((customSections) => {
+              getDefaultCustomSection();
+            });
+          }
         });
       }
     });
@@ -205,7 +224,17 @@ const AddTask = ({ setOnboarded }) => {
         setMessage("fail");
       }
     });
-  }, [setMessage, setLoading, taskTitle, note, scheduleDate, dueDate, labels, parent, timeEstimate]);
+  }, [
+    setMessage,
+    setLoading,
+    taskTitle,
+    note,
+    scheduleDate,
+    dueDate,
+    labels,
+    parent,
+    timeEstimate,
+  ]);
 
   const scheduleDateButtons = [
     {
@@ -315,17 +344,20 @@ const AddTask = ({ setOnboarded }) => {
     { text: "2h", value: 7200000 },
   ];
 
-  const keyUp = useCallback((e) => {
-    if (e.which === 13) {
-      if (document.activeElement.tagName === "TEXTAREA") {
-        // Don't create when the note is focused
-      } else if (taskTitle) {
-        handleAddTask();
-      } else {
-        setMessage("The task title is required");
+  const keyUp = useCallback(
+    (e) => {
+      if (e.which === 13) {
+        if (document.activeElement.tagName === "TEXTAREA") {
+          // Don't create when the note is focused
+        } else if (taskTitle) {
+          handleAddTask();
+        } else {
+          setMessage("The task title is required");
+        }
       }
-    }
-  }, [taskTitle, handleAddTask, setMessage]);
+    },
+    [taskTitle, handleAddTask, setMessage]
+  );
 
   const displayElements = () => {
     if (scheduleDatePicker.visible) {
@@ -383,7 +415,10 @@ const AddTask = ({ setOnboarded }) => {
     }
 
     return (
-      <div className="form-control justify-between w-full gap-4 divide-y" onKeyUp={keyUp}>
+      <div
+        className="form-control justify-between w-full gap-4 divide-y"
+        onKeyUp={keyUp}
+      >
         <div
           id="AddTask"
           className="form-control w-full pt-2 pl-5 pr-2 overflow-y-scroll"
@@ -449,7 +484,11 @@ const AddTask = ({ setOnboarded }) => {
                 role="alert"
               >
                 <span className="font-medium">Error!</span> Failed to add Task.
-                If you rotated your API credentials, please <a href="#" onClick={logout}>logout</a>. Otherwise try again or contact support!
+                If you rotated your API credentials, please{" "}
+                <a href="#" onClick={logout}>
+                  logout
+                </a>
+                . Otherwise try again or contact support!
               </div>
             ) : (
               <div

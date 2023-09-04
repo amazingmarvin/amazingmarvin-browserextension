@@ -1,3 +1,5 @@
+import { formatDate } from "./dates";
+
 export function getStoredToken() {
   if (typeof localStorage !== "undefined" && localStorage.apiToken) {
     return Promise.resolve(JSON.parse(localStorage.apiToken));
@@ -33,7 +35,10 @@ export function setStoredToken(apiToken) {
 export function getStoredCategories() {
   return new Promise((resolve) => {
     chrome.storage.local.get(["categories"]).then((result) => {
-      resolve([{ _id: "unassigned", title: "Inbox" }, ...(result.categories || [])]);
+      resolve([
+        { _id: "unassigned", title: "Inbox" },
+        ...(result.categories || []),
+      ]);
     });
   });
 }
@@ -53,6 +58,7 @@ export function getLastSyncedCategories() {
     });
   });
 }
+
 export function setLastSyncedCategories(date = new Date()) {
   return new Promise((resolve) => {
     let syncedTime = `${date.toDateString()} - ${date.toTimeString()}`;
@@ -85,12 +91,64 @@ export function getLastSyncedLabels() {
     });
   });
 }
+
 export function setLastSyncedLabels(date = new Date()) {
   return new Promise((resolve) => {
     let syncedTime = `${date.toDateString()} - ${date.toTimeString()}`;
     chrome.storage.local.set({ lastSyncedLabels: syncedTime }).then(() => {
       resolve();
     });
+  });
+}
+
+export function getStoredCustomSections() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["customSections"]).then((result) => {
+      resolve(result.customSections);
+    });
+  });
+}
+
+export function setStoredCustomSections(sections) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ customSections: sections }).then(() => {
+      resolve();
+    });
+  });
+}
+
+export function getStoredDefaultCustomSection() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["defaultCustomSection"]).then((result) => {
+      resolve(result.defaultCustomSection);
+    });
+  });
+}
+
+export function setStoredDefaultCustomSection(section) {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({ defaultCustomSection: section }).then(() => {
+      resolve();
+    });
+  });
+}
+
+export function getLastSyncedCustomSections() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["lastSyncedCustomSections"]).then((result) => {
+      resolve(result.lastSyncedCustomSections);
+    });
+  });
+}
+
+export function setLastSyncedCustomSections() {
+  return new Promise((resolve) => {
+    let syncedTime = formatDate(new Date());
+    chrome.storage.local
+      .set({ lastSyncedCustomSections: syncedTime })
+      .then(() => {
+        resolve();
+      });
   });
 }
 

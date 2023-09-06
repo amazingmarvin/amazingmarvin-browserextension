@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Browser Extension for Amazing Marvin",
   "scripts": {
-    "start": "parcel watch src/manifest.json --host localhost --config @parcel/config-webextension",
-    "build": "rm -rf dist && parcel build src/manifest.json --config @parcel/config-webextension && cd dist && zip chromium.zip -r * && mv chromium.zip ..",
-    "ff:build": "rm -f source.zip && zip -r source.zip CHANGELOG.md LICENSE README README.md api build jsconfig.json package-lock.json package.json src tailwindow.config.js && rm -rf dist_ff && npm run build && cp -r dist dist_ff && node build/ff.js && cd dist_ff && zip firefox.zip -r * && mv firefox.zip ..",
+    "start": "parcel watch src/manifest.json --host localhost --config @parcel/config-webextension --dist-dir out/dev",
+    "build": "rm -rf out/prod && parcel build src/manifest.json --config @parcel/config-webextension --dist-dir out/prod && cd out/prod && zip chromium.zip -r * && mv chromium.zip ../..",
+    "ff:build": "rm -f source.zip && zip -r source.zip CHANGELOG.md LICENSE README README.md api build jsconfig.json package-lock.json package.json src tailwindow.config.js && rm -rf out/ff && npm run build && cp -r out/prod out/ff && node build/ff.js && cd out/ff && zip firefox.zip -r * && mv firefox.zip ../..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

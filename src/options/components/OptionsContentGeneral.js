@@ -13,8 +13,8 @@ const OptionsContentGeneral = () => {
   const [groupByExpanded, setGroupByExpanded] = useState(false);
   const groupByMethods = [
     { none: "None" },
-    { dailySection: "Break the Day Down" },
-    { bonusSection: "Just the Essentials" },
+    { dailySection: "Break the Day Down (Morning/Afternoon/Evening)" },
+    { bonusSection: "Just the Essentials (Essential/Bonus)" },
     { customSection: "Custom Sections" },
   ];
 

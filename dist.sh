@@ -36,7 +36,7 @@ esac
 
 git tag -d "v$version" || echo "No tag to delete."
 git tag -a "v$version" -m "version $version"
-git push --tags
+git push --tags --force
 
 yarn run build
 yarn run ff:build

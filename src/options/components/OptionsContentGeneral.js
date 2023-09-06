@@ -12,10 +12,10 @@ const OptionsContentGeneral = () => {
   const [displaySettings, setDisplaySettings] = useState({});
   const [groupByExpanded, setGroupByExpanded] = useState(false);
   const groupByMethods = [
-    { none: "None" },
-    { dailySection: "Break the Day Down (Morning/Afternoon/Evening)" },
-    { bonusSection: "Just the Essentials (Essential/Bonus)" },
-    { customSection: "Custom Sections" },
+    { id: "none", title: "None" },
+    { id: "dailySection", title: "Break the Day Down", info: "(Morning/Afternoon/Evening)" },
+    { id: "bonusSection", title: "Just the Essentials", info: "(Essential/Bonus)" },
+    { id: "customSection", title: "Custom" },
   ];
 
   useEffect(() => {
@@ -57,11 +57,11 @@ const OptionsContentGeneral = () => {
       return "Group by";
     }
 
-    const groupByMethodObj = groupByMethods.find(
-      (method) => Object.keys(method)[0] === groupByMethod
-    );
+    const method = groupByMethods.find(
+      (x) => x.id === groupByMethod
+    ) || groupByMethods[0];
 
-    return Object.values(groupByMethodObj)[0];
+    return method.title;
   };
 
   return (
@@ -126,7 +126,7 @@ const OptionsContentGeneral = () => {
             </p>
             <div className="self-start basis-2/5 pl-5">
               <button
-                className="text-white relative w-full bg-[#1CC5CB] hover:bg-[#19B1B6] focus:ring-2 focus:outline-none focus:ring-[#1CC5CB] focus:ring-offset-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                className="text-white relative w-full bg-[#1CC5CB] hover:bg-[#19B1B6] focus:ring-2 focus:outline-none focus:ring-[#1CC5CB] focus:ring-offset-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center whitespace-nowrap"
                 type="button"
                 onClick={() => setGroupByExpanded(!groupByExpanded)}
               >
@@ -155,19 +155,18 @@ const OptionsContentGeneral = () => {
               >
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   {groupByMethods.map((method, index) => {
-                    const keyName = Object.keys(method)[0];
-                    const value = method[keyName];
+                    const { id, title, info } = method;
 
                     return (
-                      <li key={keyName}>
+                      <li key={id}>
                         <a
                           href="#"
                           className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                           onClick={() => {
-                            handleDisplaySetting("groupByMethod", keyName);
+                            handleDisplaySetting("groupByMethod", id);
                             setGroupByExpanded(false);
 
-                            if (keyName === "customSection") {
+                            if (id === "customSection") {
                               getStoredCustomSections().then((sections) => {
                                 if (sections.length === 0) {
                                   fetchCustomSections();
@@ -176,7 +175,8 @@ const OptionsContentGeneral = () => {
                             }
                           }}
                         >
-                          {value}
+                          {title}
+                          {info && ` ${info}`}
                         </a>
                       </li>
                     );

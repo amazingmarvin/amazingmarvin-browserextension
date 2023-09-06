@@ -1,3 +1,7 @@
+# 0.6.0 (2023-09-06)
+* You can now click X to clear Task Title/Note
+* You can now group Tasks in your day
+
 # 0.5.0 (2023-06-26)
 * Improved error messages
 * Added auto-populate settings

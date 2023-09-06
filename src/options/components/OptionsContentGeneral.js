@@ -51,7 +51,7 @@ const OptionsContentGeneral = () => {
       return "None";
     }
 
-    const groupByMethod = displaySettings.groupByMethod;
+    const groupByMethod = displaySettings.groupByMethod || "none";
 
     if (groupByMethod === "none") {
       return "Group by";

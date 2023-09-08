@@ -87,7 +87,7 @@ const TaskList = ({ apiToken, setOnboarded }) => {
       if (groupByMethod === "dailySection") {
         defaultSection = "Morning";
       } else if (groupByMethod === "bonusSection") {
-        defaultSection = "Essentials";
+        defaultSection = "Essential";
       } else if (groupByMethod === "customSection" && customSections?.length) {
         customSectionLookup = customSections.reduce((acc, section) => {
           acc[section.id] = section.title;

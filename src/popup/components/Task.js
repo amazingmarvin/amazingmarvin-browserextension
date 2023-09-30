@@ -41,7 +41,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
 
   return (
     <li
-      className="flex items-center justify-between gap-3 px-2 py-3 hover:bg-neutral-50 text-base"
+      className="relative flex items-center justify-between gap-3 px-2 py-3 hover:bg-neutral-50 text-base"
       onMouseEnter={() => {
         setIsHovered(true);
       }}
@@ -78,7 +78,7 @@ const Task = ({ task, apiToken, updateTasks }) => {
       </div>
       {isHovered && (
         <div
-          className="relative hover:cursor-pointer"
+          className="absolute right-2 p-1 bg-neutral-50 rounded-md hover:cursor-pointer"
           data-hov="Open in Marvin"
           data-pos="R"
         >

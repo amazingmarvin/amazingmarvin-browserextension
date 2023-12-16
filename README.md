@@ -111,12 +111,18 @@ it in your browser. Building requires `node` (tested with v14 and higher), and
    ```sh
     npm run ff:build
     ```
+5. Build and watch source (for hacking)
+   ```sh
+   npm run start
+   ```
 
 ### Loading the extension in your browser
 
-To load the extension, go to the extensions page in your browser. For Chrome, you can go to `chrome://extensions/` and
-for Edge, you can go to `edge://extensions/`. Once you're there, click on the "Load unpacked" button and select
-the `dist` folder from the project.
+To load the extension, go to the extensions page in your browser. For Chrome,
+you can go to `chrome://extensions/` and for Edge, you can go to
+`edge://extensions/`. Once you're there, click on the "Load unpacked" button
+and select the `dist/dev` folder from the project. If you don't see the "Load
+unpacked" button, be sure to toggle "Developer mode".
 
 In Firefox, open `about:debugging#/runtime/this-firefox` and click "Load
 Temporary Add-On..." and select the `dist_ff` folder from the project.
@@ -128,9 +134,9 @@ Temporary Add-On..." and select the `dist_ff` folder from the project.
 ## Roadmap
 
 - [ ] Optimize content script code
-- [ ] Add support for Firefox
+- [x] Add support for Firefox
 - [ ] Display currently tracked task in the popup
-- [ ] Add priorities and other task field
+- [ ] Add priorities and other task fields
 - [ ] Autocomplete categories, labels, and others while inputting tasks
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

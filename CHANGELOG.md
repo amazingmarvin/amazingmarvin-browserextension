@@ -1,3 +1,9 @@
+# 0.7.0 (2023-12-16)
+* Improved "Open in Marvin" placement
+
+# 0.6.1 (2023-09-06)
+* Fixed build issue
+
 # 0.6.0 (2023-09-06)
 * You can now click X to clear Task Title/Note
 * You can now group Tasks in your day

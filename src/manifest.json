@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Amazing Marvin",
   "description": "Amazing Marvin Browser Extension",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "icons": {
     "16": "static/logo2.png",
     "48": "static/logo2.png",

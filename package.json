@@ -23,24 +23,24 @@
     "extension"
   ],
   "author": "Branimir Rijavec",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/amazingmarvin/amazingmarvin-browserextension/issues"
   },
   "homepage": "https://github.com/amazingmarvin/amazingmarvin-browserextension#readme",
   "devDependencies": {
-    "@parcel/config-webextension": "^2.8.2",
-    "parcel": "^2.8.2",
-    "postcss": "^8.4.21",
-    "process": "^0.11.10",
-    "tailwindcss": "^3.2.4"
+    "@parcel/config-webextension": "2.10.3",
+    "parcel": "2.10.3",
+    "postcss": "8.4.32",
+    "process": "0.11.10",
+    "tailwindcss": "3.3.6"
   },
   "dependencies": {
-    "daisyui": "^2.47.0",
-    "date-fns": "^2.29.3",
-    "react": "^18.2.0",
-    "react-day-picker": "^8.5.1",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.7.1"
+    "daisyui": "4.4.20",
+    "date-fns": "2.30.0",
+    "react": "18.2.0",
+    "react-day-picker": "8.9.1",
+    "react-dom": "18.2.0",
+    "react-icons": "4.12.0"
   }
 }
